@@ -72,7 +72,7 @@ async def genmessage(_, message):
     if ACCESS:
         await message.edit(gemini(message.text))
 
-@bot.on_message(filters.text & filters.user(SUDO))
+@bot.on_message(filters.text & filters.user(list(SUDO)))
 async def gen_message(_, message):
     if ACCESS:
         await message.reply(gemini(message.text))
