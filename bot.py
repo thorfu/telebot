@@ -4,6 +4,7 @@ from pyrogram import Client, filters
 from flask import Flask, redirect
 from threading import Thread
 import time
+import asyncio
 
 API_ID = os.getenv("API_ID")
 API_HASH = os.getenv("API_HASH")
@@ -65,7 +66,10 @@ async def unsudo(_, message):
 async def access(_, message):
     global ACCESS
     ACCESS = not ACCESS
-    await message.edit("Access has been granted" if ACCESS else "Access has been revoked")    
+    m = await message.edit("Access has been granted" if ACCESS else "Access has been revoked")
+    await asyncio.sleep(2)
+    await m.delete()
+
 
 @bot.on_message(filters.text & filters.me)
 async def genmessage(_, message):
