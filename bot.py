@@ -26,7 +26,31 @@ bot = Client(
 
 def gemini(text):
     try:
-        model = genai.GenerativeModel(model_name="gemini-pro")
+        generation_config = {
+            "temperature": 0.6,
+            "top_p": 1,
+            "top_k": 1,
+            "max_output_tokens": 2048,
+        }
+        safety_settings = [
+          {
+            "category": "HARM_CATEGORY_HARASSMENT",
+            "threshold": "BLOCK_ONLY_HIGH"
+          },
+          {
+            "category": "HARM_CATEGORY_HATE_SPEECH",
+            "threshold": "BLOCK_ONLY_HIGH"
+          },
+          {
+            "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+            "threshold": "BLOCK_ONLY_HIGH"
+          },
+          {
+            "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+            "threshold": "BLOCK_ONLY_HIGH"
+          },
+        ]
+        model = genai.GenerativeModel(model_name="gemini-pro", generation_config=generation_config, safety_settings=safety_settings)
         convo = model.start_chat()
         convo.send_message(text)
         return f"{convo.last.text}"
@@ -34,16 +58,12 @@ def gemini(text):
         print(f"Error generating text: {str(e)}")
         return f"Error generating text: {str(e)}"
     
-@bot.on_message(filters.command("alive", prefixes=".") & filters.me)
-async def start(_, message):
-    await message.edit("I'm alive.")
-
 @bot.on_message(filters.command("ping", prefixes=".") & filters.me)
 async def ping(_, message):
     start = time.time()
-    await message.edit("Pong!")
+    await message.edit(f"<code>Pong!</code>")
     end = time.time()
-    await message.edit(f"Pong!\nTook {round(end-start, 2)}s")
+    await message.edit(f"<code>Pong! {round(end-start, 2)}s</code>")
 
 @bot.on_message(filters.command("sudo", prefixes=".") & filters.me)
 async def sudo(client, message):
@@ -52,11 +72,11 @@ async def sudo(client, message):
         SUDO.add(user_id)
         k = await client.get_users(user_id)
         name = k.first_name if not k.last_name else k.first_name + " " + k.last_name
-        m = await message.reply_text(f"<b>{name}</b> has been given sudo access.")
+        m = await message.edit(f"<b>{name}</b> has been given sudo access.")
         await asyncio.sleep(5)
         await m.delete()
     else:
-        m = await message.reply_text("Reply to a message to give sudo access to the user.")
+        m = await message.edit("Reply to a message to give sudo access to the user.")
         await asyncio.sleep(2)
         await m.delete()
 
