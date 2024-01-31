@@ -10,7 +10,6 @@ DUMB = False
 
 genai.configure(api_key=GENAI_API_KEY)
 
-
 def gemini(text):
     try:
         generation_config = {
