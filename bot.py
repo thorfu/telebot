@@ -72,10 +72,11 @@ async def genmessage(_, message):
     if ACCESS:
         await message.edit(gemini(message.text))
 
-@bot.on_message(filters.text & filters.user(list(SUDO)))
+@bot.on_message(filters.text)
 async def gen_message(_, message):
-    if ACCESS:
+    if ACCESS and message.from_user.id in list(SUDO):
         await message.reply(gemini(message.text))
+
     
 app = Flask(__name__)
 
