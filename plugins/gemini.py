@@ -1,6 +1,5 @@
 import google.generativeai as genai
 from pyrogram import Client, filters
-import time
 import asyncio
 from info import GENAI_API_KEY
 
@@ -45,13 +44,6 @@ def gemini(text):
     except Exception as e:
         print(f"Error generating text: {str(e)}")
         return f"Error generating text: {str(e)}"
-
-@Client.on_message(filters.command("ping", prefixes=".") & filters.me)
-async def ping(_, message):
-    start = time.time()
-    await message.edit("Pong!")
-    end = time.time()
-    await message.edit(f"Pong!\nTook {round(end-start, 2)}s")
 
 @Client.on_message(filters.command("sudo", prefixes=".") & filters.me)
 async def sudo(client, message):
