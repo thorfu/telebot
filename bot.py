@@ -13,6 +13,7 @@ GENAI_API_KEY = os.getenv("GENAI_API_KEY")
 
 SUDO = set()
 ACCESS = False
+GLOBAL_ACCESS = False
 
 genai.configure(api_key=GENAI_API_KEY)
 
@@ -35,7 +36,7 @@ def gemini(text):
     
 @bot.on_message(filters.command("alive", prefixes=".") & filters.me)
 async def start(_, message):
-    await message.edit("Hello! I'm alive.")
+    await message.edit("I'm alive.")
 
 @bot.on_message(filters.command("ping", prefixes=".") & filters.me)
 async def ping(_, message):
@@ -45,22 +46,35 @@ async def ping(_, message):
     await message.edit(f"Pong!\nTook {round(end-start, 2)}s")
 
 @bot.on_message(filters.command("sudo", prefixes=".") & filters.me)
-async def sudo(_, message):
+async def sudo(client, message):
     user_id = message.reply_to_message.from_user.id if message.reply_to_message else None
     if user_id:
         SUDO.add(user_id)
-        await message.reply_text(f"User {user_id} has been given sudo access.")
+        k = await client.get_users(user_id)
+        name = k.first_name if not k.last_name else k.first_name + " " + k.last_name
+        m = await message.reply_text(f"<b>{name}</b> has been given sudo access.")
+        await asyncio.sleep(5)
+        await m.delete()
     else:
-        await message.reply_text("Reply to a message to give sudo access to the user.")
+        m = await message.reply_text("Reply to a message to give sudo access to the user.")
+        await asyncio.sleep(2)
+        await m.delete()
+
 
 @bot.on_message(filters.command("unsudo", prefixes=".") & filters.me)
-async def unsudo(_, message):
+async def unsudo(client, message):
     user_id = message.reply_to_message.from_user.id if message.reply_to_message else None
     if user_id and user_id in SUDO:
         SUDO.remove(user_id)
-        await message.edit(f"User {user_id} has been removed from sudo access.")
+        k = await client.get_users(user_id)
+        name = k.first_name if not k.last_name else k.first_name + " " + k.last_name
+        m = await message.edit(f"<b>{name}</b> has been removed from sudo access.")
+        await asyncio.sleep(5)
+        await m.delete()
     else:
-        await message.edit("Reply to a message to remove sudo access from the user.")
+        m = await message.edit("Reply to a message to remove sudo access from the user.")
+        await asyncio.sleep(3)
+        await m.delete()
 
 @bot.on_message(filters.command("access", prefixes=".") & filters.me)
 async def access(_, message):
@@ -70,6 +84,13 @@ async def access(_, message):
     await asyncio.sleep(2)
     await m.delete()
 
+@bot.on_message(filters.command("global", prefixes=".") & filters.me)
+async def gaccess(_, message):
+    global GLOBAL_ACCESS
+    GLOBAL_ACCESS = not GLOBAL_ACCESS
+    m = await message.edit("Global access has been granted" if GLOBAL_ACCESS else "Global access has been revoked")
+    await asyncio.sleep(2)
+    await m.delete()    
 
 @bot.on_message(filters.text & filters.me)
 async def genmessage(_, message):
@@ -80,7 +101,8 @@ async def genmessage(_, message):
 async def gen_message(_, message):
     if ACCESS and message.from_user.id in list(SUDO):
         await message.reply(gemini(message.text))
-
+    if ACCESS and GLOBAL_ACCESS:
+        await message.reply(gemini(message.text))
     
 app = Flask(__name__)
 
