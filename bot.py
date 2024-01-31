@@ -27,7 +27,7 @@ bot = Client(
 def gemini(text):
     try:
         generation_config = {
-            "temperature": 0.5,
+            "temperature": 0.6,
             "top_p": 1,
             "top_k": 1,
             "max_output_tokens": 2048,
@@ -50,7 +50,9 @@ def gemini(text):
             "threshold": "BLOCK_ONLY_HIGH"
           },
         ]
-        model = genai.GenerativeModel(model_name="gemini-pro", generation_config=generation_config, safety_settings=safety_settings)
+        model = genai.GenerativeModel(model_name="gemini-pro",
+                                      generation_config=generation_config,
+                                      safety_settings=safety_settings)
         convo = model.start_chat()
         convo.send_message(text)
         return f"{convo.last.text}"
@@ -58,12 +60,16 @@ def gemini(text):
         print(f"Error generating text: {str(e)}")
         return f"Error generating text: {str(e)}"
     
+@bot.on_message(filters.command("alive", prefixes=".") & filters.me)
+async def start(_, message):
+    await message.edit("I'm alive.")
+
 @bot.on_message(filters.command("ping", prefixes=".") & filters.me)
 async def ping(_, message):
     start = time.time()
-    await message.edit(f"<code>Pong!</code>")
+    await message.edit("Pong!")
     end = time.time()
-    await message.edit(f"<code>Pong! {round(end-start, 2)}s</code>")
+    await message.edit(f"Pong!\nTook {round(end-start, 2)}s")
 
 @bot.on_message(filters.command("sudo", prefixes=".") & filters.me)
 async def sudo(client, message):
@@ -79,7 +85,6 @@ async def sudo(client, message):
         m = await message.edit("Reply to a message to give sudo access to the user.")
         await asyncio.sleep(2)
         await m.delete()
-
 
 @bot.on_message(filters.command("unsudo", prefixes=".") & filters.me)
 async def unsudo(client, message):
