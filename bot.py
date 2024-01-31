@@ -11,7 +11,7 @@ class Bot(Client):
             name="autofilter",
             api_id=API_ID,
             api_hash=API_HASH,
-            session=SESSION,
+            session_string=SESSION,
             workers=10,
             plugins={"root": "plugins"},
             sleep_threshold=5,
