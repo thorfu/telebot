@@ -1,7 +1,7 @@
 import os
 import google.generativeai as genai
 from pyrogram import Client, filters
-from flask import Flask
+from flask import Flask, redirect
 from threading import Thread
 import time
 
@@ -81,7 +81,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return "Bot is running!"
+    return redirect("https://telegram.me/iryme", code=302)
 
 def run():
     app.run(host="0.0.0.0", port=int(os.environ.get('PORT', 8080)))
