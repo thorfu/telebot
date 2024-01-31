@@ -1,0 +1,8 @@
+pyrogram
+tgcrypto
+pymongo
+motor
+aiohttp
+google-generativeai
+pytz
+flask
