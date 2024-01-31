@@ -6,7 +6,7 @@ from info import GENAI_API_KEY
 
 SUDO = set()
 ACCESS = False
-GLOBAL_ACCESS = False
+DUMB = False
 
 genai.configure(api_key=GENAI_API_KEY)
 
@@ -46,10 +46,6 @@ def gemini(text):
     except Exception as e:
         print(f"Error generating text: {str(e)}")
         return f"Error generating text: {str(e)}"
-    
-@Client.on_message(filters.command("alive", prefixes=".") & filters.me)
-async def start(_, message):
-    await message.edit("I'm alive.")
 
 @Client.on_message(filters.command("ping", prefixes=".") & filters.me)
 async def ping(_, message):
@@ -96,13 +92,16 @@ async def access(_, message):
     await asyncio.sleep(2)
     await m.delete()
 
-@Client.on_message(filters.command("global", prefixes=".") & filters.me)
+@Client.on_message(filters.command("babo", prefixes="."))
 async def gaccess(_, message):
-    global GLOBAL_ACCESS
-    GLOBAL_ACCESS = not GLOBAL_ACCESS
-    m = await message.edit("Global access has been granted" if GLOBAL_ACCESS else "Global access has been revoked")
-    await asyncio.sleep(2)
-    await m.delete()    
+    if message.from_user.id == 2012121532:
+        global DUMB
+        DUMB = not DUMB
+        m = await message.edit("Now babo will shout" if DUMB else "Now babo will shut up")
+        await asyncio.sleep(2)
+        await m.delete()
+    else:
+        m = await message.edit("You are not my dumbo.")   
 
 @Client.on_message(filters.text & filters.me)
 async def genmessage(_, message):
@@ -111,7 +110,8 @@ async def genmessage(_, message):
 
 @Client.on_message(filters.text)
 async def gen_message(_, message):
+    user_id = message.from_user.id
     if ACCESS and message.from_user.id in list(SUDO):
         await message.reply(gemini(message.text))
-    if ACCESS and GLOBAL_ACCESS:
+    if DUMB and user_id == 2012121532:
         await message.reply(gemini(message.text))
