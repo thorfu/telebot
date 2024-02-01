@@ -1,5 +1,7 @@
 from pyrogram import Client, filters
-from plugins.modules import urban, emoji, spam, meaning
+from plugins.modules.emoji import emoji
+from plugins.modules.spam import spam
+from plugins.modules.urban import urban, meaning
 import time
 
 
