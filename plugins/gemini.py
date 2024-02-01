@@ -1,13 +1,15 @@
+import asyncio
+import time
+import re
 import google.generativeai as genai
 from pyrogram import Client, filters
-import asyncio
 from info import GENAI_API_KEY
 from plugins.modules.emoji import emoji
 from plugins.modules.spam import spam
 from plugins.modules.urban import urban, meaning
 from plugins.modules.facts import get_facts
-import time
-import re
+from plugins.modules.quotes import get_quotes
+
 
 SUDO = set()
 ACCESS = False
@@ -77,11 +79,15 @@ async def ping(_, message):
 
 @Client.on_message(filters.command(["urban", "ud"], prefixes="."))
 async def get_urban(_, message):
+    if message.text:
+        await message.delete()
     await urban(message)
 
 @Client.on_message(filters.command(["meaning", "m"], prefixes="."))
 async def get_meaning(_, message):
-    await meaning(message)    
+    if message.text:
+        await message.delete()
+    await meaning(message)
 
 @Client.on_message(filters.command("emoji", prefixes=".") & filters.private)
 async def get_emoji(_, message):
@@ -93,11 +99,17 @@ async def get_emoji(_, message):
 async def spam_message(_, message):
     await spam(message)
 
-@Client.on_message(filters.command("facts", prefixes=".") & filters.private)
+@Client.on_message(filters.command(["facts", "f"], prefixes=".") & filters.private)
 async def fact_msg(_, message):
     if message.text:
         await message.delete()
     await get_facts(message)
+
+@Client.on_message(filters.command(["quotes", "q", "quote"], prefixes="."))
+async def get_quote(_, message):
+    if message.text:
+        await message.delete()
+    await get_quotes(message)
 
 @Client.on_message(filters.command("sudo", prefixes=".") & filters.me)
 async def sudo(client, message):
