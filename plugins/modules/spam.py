@@ -1,7 +1,4 @@
-from pyrogram import Client, filters
-
-@Client.on_message(filters.command("spam", prefixes=".") & filters.me)
-async def spam(client, message):
+async def spam(message):
     _, *text_parts = message.text.split()
     try:
         number_of_messages = int(text_parts[0])

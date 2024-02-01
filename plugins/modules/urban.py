@@ -1,9 +1,7 @@
-from pyrogram import Client, filters
 import aiohttp
 import asyncio
 
-@Client.on_message(filters.command(["urban", "ud"], prefixes=".") & filters.me)
-async def urban(client, message):
+async def urban(message):
     word = message.text.split(maxsplit=1)[1]
     m = await message.edit(f"**Searching for** `{word}`")
     try:
@@ -22,8 +20,8 @@ async def urban(client, message):
     except Exception as e:
         await m.edit(text="`The Urban Dictionary API could not be reached`")
 
-@Client.on_message(filters.command(["meaning", "m"], prefixes=".") & filters.me)
-async def meaning(client, message):
+
+async def meaning(message):
     word = message.text.split(maxsplit=1)[1]
     m = await message.edit(f"**Searching for** `{word}`")
     await asyncio.sleep(2)

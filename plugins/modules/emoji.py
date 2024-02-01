@@ -1,5 +1,3 @@
-from pyrogram import Client, filters
-
 emojis = [
     "⁭\n                    💖\n                  💖💖\n               💖💖💖\n            💖💖 💖💖\n          💖💖    💖💖\n        💖💖       💖💖\n      💖💖💖💖💖💖\n     💖💖💖💖💖💖💖\n   💖💖                 💖💖\n  💖💖                    💖💖\n💖💖                       💖💖\n",
     "⁭\n💗💗💗💗💗💗💗\n💗💗💗💗💗💗💗💗\n💗💗                     💗💗\n💗💗                     💗💗\n💗💗💗💗💗💗💗💗\n💗💗💗💗💗💗💗💗\n💗💗                     💗💗\n💗💗                     💗💗\n💗💗💗💗💗💗💗💗\n💗💗💗💗💗💗💗\n",
@@ -50,8 +48,7 @@ def convert_to_emoji(text):
 
     return result
 
-@Client.on_message(filters.command("emoji", prefixes=".") & filters.me)
-async def emoji(client, message):
+async def emoji(message):
     if len(message.command) < 2:
         await message.edit("Usage: `.emoji <text>`")
         return
