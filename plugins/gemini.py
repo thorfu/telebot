@@ -109,7 +109,8 @@ async def fact_msg(_, message):
 async def get_quote(_, message):
     if message.text:
         await message.delete()
-    await get_quotes(message)
+    quotes = await get_quotes()
+    await message.reply(f"{quotes}")
 
 @Client.on_message(filters.command("sudo", prefixes=".") & filters.me)
 async def sudo(client, message):
