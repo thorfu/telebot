@@ -70,12 +70,12 @@ async def get_meaning(_, message):
 
 @Client.on_message(filters.command("emoji", prefixes=".") & filters.private)
 async def get_emoji(_, message):
-    await message.delete()
+    if message.text:
+        await message.delete()
     await emoji(message)
 
 @Client.on_message(filters.command("spam", prefixes=".") & filters.me)
 async def spam_message(_, message):
-    await message.delete()
     await spam(message)
     
 
