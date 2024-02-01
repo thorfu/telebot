@@ -54,4 +54,4 @@ async def emoji(message):
         return
 
     text = message.text.split(maxsplit=1)[1]
-    await message.edit(convert_to_emoji(text))
+    await message.reply(convert_to_emoji(text))
