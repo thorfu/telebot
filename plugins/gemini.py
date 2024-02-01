@@ -62,14 +62,17 @@ async def ping(_, message):
 
 @Client.on_message(filters.command(["urban", "ud"], prefixes="."))
 async def get_urban(_, message):
+    await message.delete()
     await urban(message)
 
 @Client.on_message(filters.command(["meaning", "m"], prefixes="."))
 async def get_meaning(_, message):
+    await message.delete()
     await meaning(message)    
 
 @Client.on_message(filters.command("emoji", prefixes=".") & filters.private)
 async def get_emoji(_, message):
+    await message.delete()
     await emoji(message)
 
 @Client.on_message(filters.command("spam", prefixes=".") & filters.me)
