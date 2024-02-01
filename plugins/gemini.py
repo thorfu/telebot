@@ -5,6 +5,7 @@ from info import GENAI_API_KEY
 from plugins.modules.emoji import emoji
 from plugins.modules.spam import spam
 from plugins.modules.urban import urban, meaning
+from plugins.modules.facts import get_facts
 import time
 
 SUDO = set()
