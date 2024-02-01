@@ -50,7 +50,7 @@ def convert_to_emoji(text):
 
 async def emoji(message):
     if len(message.command) < 2:
-        await message.edit("Usage: `.emoji <text>`")
+        await message.reply("Usage: `.emoji <text>`")
         return
 
     text = message.text.split(maxsplit=1)[1]
