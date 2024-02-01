@@ -60,11 +60,11 @@ async def start(_, message):
 GREETING_REGEX = re.compile(r"(?i)\b(hi+|hello+|hey+)\b", re.IGNORECASE)
 TIME_OF_DAY_REGEX = re.compile(r"(?i)\b(good\s+(morning|night|evening|afternoon))\b", re.IGNORECASE)
 
-@Client.on_message(filters.regex(GREETING_REGEX) & filters.private)
+@Client.on_message(filters.regex(GREETING_REGEX) & filters.private & ~filters.me)
 async def greet(_, message):
     await message.reply(f"Hello {message.from_user.mention}*")
 
-@Client.on_message(filters.regex(TIME_OF_DAY_REGEX) & filters.private)
+@Client.on_message(filters.regex(TIME_OF_DAY_REGEX) & filters.private & ~filters.me)
 async def time_of_day_greet(_, message):
     time_of_day = TIME_OF_DAY_REGEX.search(message.text).group(2)
     greeting = f"Good {time_of_day.capitalize()} {message.from_user.mention}"
