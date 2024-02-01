@@ -7,6 +7,7 @@ from plugins.modules.spam import spam
 from plugins.modules.urban import urban, meaning
 from plugins.modules.facts import get_facts
 import time
+import re
 
 SUDO = set()
 ACCESS = False
@@ -53,6 +54,19 @@ def gemini(text):
 @Client.on_message(filters.command("start", prefixes=".") & filters.me)
 async def start(_, message):
     await message.reply_text("Hello, World!")
+
+GREETING_REGEX = re.compile(r"(?i)\b(hi+|hello+|hey+)\b", re.IGNORECASE)
+TIME_OF_DAY_REGEX = re.compile(r"(?i)\b(good\s+(morning|night|evening|afternoon))\b", re.IGNORECASE)
+
+@Client.on_message(filters.regex(GREETING_REGEX) & filters.private)
+async def greet(_, message):
+    await message.reply(f"Hello {message.from_user.mention}*")
+
+@Client.on_message(filters.regex(TIME_OF_DAY_REGEX) & filters.private)
+async def time_of_day_greet(_, message):
+    time_of_day = TIME_OF_DAY_REGEX.search(message.text).group(2)
+    greeting = f"Good {time_of_day.capitalize()} {message.from_user.mention}"
+    await message.reply(greeting)
 
 @Client.on_message(filters.command("ping", prefixes=".") & filters.me)   
 async def ping(_, message):
