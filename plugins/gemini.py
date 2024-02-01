@@ -78,7 +78,10 @@ async def get_emoji(_, message):
 @Client.on_message(filters.command("spam", prefixes=".") & filters.me)
 async def spam_message(_, message):
     await spam(message)
-    
+
+@Client.on_message(filters.command("facts", prefixes=".") & filters.private)
+async def fact_msg(_, message):
+    await get_facts(message)
 
 @Client.on_message(filters.command("sudo", prefixes=".") & filters.me)
 async def sudo(client, message):
