@@ -1,7 +1,7 @@
 from pyrogram import Client, filters
 import time
 
-@Client.on_message(filters.command("ping", prefixes=".") & filters.me)
+@Client.on_message(filters.command(["ping", "alive"], prefixes=".") & filters.me)
 async def ping(_, message):
     start = time.time()
     await message.edit("Pong!")
