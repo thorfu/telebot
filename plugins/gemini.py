@@ -61,8 +61,8 @@ async def ping(_, message):
     await message.edit(f"Pong! {round(end-start, 2)}s") 
 
 @Client.on_message(filters.command(["urban", "ud"], prefixes="."))
-async def get_urban(client, message):
-    await urban(client, message)
+async def get_urban(_, message):
+    await urban(message)
 
 @Client.on_message(filters.command(["meaning", "m"], prefixes="."))
 async def get_meaning(_, message):
@@ -74,7 +74,9 @@ async def get_emoji(_, message):
 
 @Client.on_message(filters.command("spam", prefixes=".") & filters.me)
 async def spam_message(_, message):
+    await message.delete()
     await spam(message)
+    
 
 @Client.on_message(filters.command("sudo", prefixes=".") & filters.me)
 async def sudo(client, message):
