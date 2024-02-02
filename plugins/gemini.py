@@ -57,12 +57,16 @@ def gemini(text):
 async def start(_, message):
     await message.reply_text("Hello, World!")
 
-GREETING_REGEX = re.compile(r"(?i)\b(hi+|hello+|hey+)\b", re.IGNORECASE)
-TIME_OF_DAY_REGEX = re.compile(r"(?i)\b(good\s+(morning|night|evening|afternoon))\b", re.IGNORECASE)
+GREETING_REGEX = re.compile(r"(?i)\b(hi+|hello+|hey+|hola+|namasker|mingalarbar)\b", re.IGNORECASE)
+TIME_OF_DAY_REGEX = re.compile(r"(?i)\b(good\s+(morning|night|evening|afternoon|noon))\b", re.IGNORECASE)
 
 @Client.on_message(filters.regex(GREETING_REGEX) & filters.private & ~filters.me)
 async def greet(_, message):
-    await message.reply(f"Hello {message.from_user.mention}*")
+    await message.reply(f"Hello")
+
+@Client.on_message(filters.regex("babo") & filters.private & ~filters.me)
+async def dumbo(_, message):
+    await message.reply(f"dumbo")
 
 @Client.on_message(filters.regex(TIME_OF_DAY_REGEX) & filters.private & ~filters.me)
 async def time_of_day_greet(_, message):
