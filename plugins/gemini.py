@@ -64,9 +64,9 @@ TIME_OF_DAY_REGEX = re.compile(r"(?i)\b(good\s+(morning|night|evening|afternoon|
 async def greet(_, message):
     await message.reply(f"Hello")
 
-@Client.on_message(filters.regex("babo") & filters.private & ~filters.me)
+@Client.on_message(filters.regex("Babo"|"babo") & filters.private & ~filters.me)
 async def dumbo(_, message):
-    await message.reply(f"dumbo")
+    await message.reply(f"Dumbo")
 
 @Client.on_message(filters.regex(TIME_OF_DAY_REGEX) & filters.private & ~filters.me)
 async def time_of_day_greet(_, message):
