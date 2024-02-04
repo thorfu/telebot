@@ -113,6 +113,21 @@ async def get_quote(_, message):
     quotes = await get_quotes()
     await message.reply(f"{quotes}")
 
+@Client.on_message(filters.command("ask", prefixes="/"))
+async def ask(_, message):
+    try:
+        text = message.text.split(None, 1)[1]
+    except IndexError:
+        await message.reply("Use `/ask <your questions>`")
+        return
+
+    if not text:
+        await message.reply("Use `/ask <your questions>`")
+    else:
+        await message.reply(gemini(text))
+        if message.text:
+            await message.delete()
+
 @Client.on_message(filters.command("sudo", prefixes=".") & filters.me)
 async def sudo(client, message):
     user_id = message.reply_to_message.from_user.id if message.reply_to_message else None
