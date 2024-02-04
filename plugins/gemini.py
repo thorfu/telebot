@@ -53,16 +53,30 @@ def gemini(text):
         print(f"Error generating text: {str(e)}")
         return f"Error generating text: {str(e)}"
 
-@Client.on_message(filters.command("start", prefixes=".") & filters.me)
-async def start(_, message):
-    await message.edit("Hello, World!")
+@Client.on_message(filters.command(["help", "h"], prefixes="."))
+async def help(_, message):
+    if message.text:
+        await message.delete()
+    await message.reply(
+        f"**Commands**\n\n"
+        "`.ping` - Check the bot's ping\n"
+        "`.urban <word>` - Get the urban dictionary meaning of the word\n"
+        "`.meaning <word>` - Get the meaning of the word\n"
+        "`.emoji <emoji>` - To generate emoji text\n"
+        "`.facts` - Get random facts\n"
+        "`.quotes` - Get random quotes\n"
+        "`.access` - Enable/Disable access to the bot\n"
+        "`.babo` - Enable/Disable babo's shouting\n"
+    )
 
-@Client.on_message(filters.command("ping", prefixes=".") & filters.me)   
+@Client.on_message(filters.command("ping", prefixes="."))   
 async def ping(_, message):
-    start = time.time()
-    await message.edit("Pong!")
+    start = time.time()  
+    m = await message.reply("Pong!")
     end = time.time()
-    await message.edit(f"Pong! {round(end-start, 2)}s") 
+    await m.edit(f"Pong! {round(end-start, 2)}s") 
+    if message.text:
+        await message.delete()
 
 @Client.on_message(filters.command(["urban", "ud"], prefixes="."))
 async def get_urban(_, message):
@@ -76,13 +90,13 @@ async def get_meaning(_, message):
         await message.delete()
     await meaning(message)
 
-@Client.on_message(filters.command("emoji", prefixes=".") & filters.private)
+@Client.on_message(filters.command(["emoji", "e"], prefixes=".") & filters.private)
 async def get_emoji(_, message):
     if message.text:
         await message.delete()
     await emoji(message)
 
-@Client.on_message(filters.command("spam", prefixes=".") & filters.me)
+@Client.on_message(filters.command(["spam", "s"], prefixes=".") & filters.me)
 async def spam_message(_, message):
     await spam(message)
 
