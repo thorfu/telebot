@@ -60,11 +60,11 @@ async def help(_, message):
     await message.reply(
         f"**Commands**\n\n"
         "`.ping` - Check the bot's ping\n"
-        "`.urban <word>` - Get the urban dictionary meaning of the word\n"
-        "`.meaning <word>` - Get the meaning of the word\n"
-        "`.emoji <emoji>` - To generate emoji text\n"
-        "`.facts` - Get random facts\n"
-        "`.quotes` - Get random quotes\n"
+        "`.urban or .ud <word>` - Get the urban dictionary meaning of the word\n"
+        "`.meaning or .m <word>` - Get the meaning of the word\n"
+        "`.emoji or .e <emoji>` - To generate emoji text\n"
+        "`.facts or .f` - Get random facts\n"
+        "`.quotes or .q` - Get random quotes\n"
         "`.access` - Enable/Disable access to the bot\n"
         "`.babo` - Enable/Disable babo's shouting\n"
     )
