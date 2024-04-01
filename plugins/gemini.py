@@ -9,6 +9,8 @@ from plugins.modules.spam import spam
 from plugins.modules.urban import urban, meaning
 from plugins.modules.facts import get_facts
 from plugins.modules.quotes import get_quotes
+import openai
+from openai.api_resources import ChatCompletion
 
 
 SUDO = set()
@@ -52,6 +54,22 @@ def gemini(text):
     except Exception as e:
         print(f"Error generating text: {str(e)}")
         return f"Error generating text: {str(e)}"
+
+# ------------------ OpenAI Generator ------------------
+def openaigen(text):
+    messages = [{"role": "assistant", "content": text}]
+    try:
+        MODEL = "gpt-3.5-turbo"    # gpt-3.5-turbo model
+        resp = ChatCompletion.create(
+            model=MODEL,
+            messages=messages,
+            temperature=0.2,
+        )
+        rep = resp['choices'][0]["message"]["content"]
+        return rep
+    except Exception as e:
+        return f"Error generating text: {str(e)}"
+
 
 @Client.on_message(filters.command(["help", "h"], prefixes="."))
 async def help(_, message):
