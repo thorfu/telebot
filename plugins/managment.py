@@ -79,3 +79,11 @@ async def unmute(client, message):
             await client.restrict_chat_member(message.chat.id, message.reply_to_message.from_user.id, can_send_messages=True)
     except Exception as e:
         await message.edit_text(f"{e}")
+
+@Client.on_message(filters.command("delete", prefixes=".") & filters.me)
+async def delete(client, message):
+    try:
+        if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
+            await client.delete_messages(message.chat.id, message.reply_to_message.message_id)
+    except Exception as e:
+        await message.edit_text(f"{e}")
