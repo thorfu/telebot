@@ -2,3 +2,5 @@ pyrofork
 tgcrypto
 google-generativeai
 aiohttp
+requests
+pillow
