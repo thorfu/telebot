@@ -46,12 +46,12 @@ async def ask(_, message):
     try:
         text = message.text.split(None, 1)[1]
     except IndexError:
-        await message.reply("Use `/ask <your questions>`")
+        await message.edit("Use `/ask <your questions>`")
         return
 
     if not text:
-        await message.reply("Use `/ask <your questions>`")
+        await message.edit("Use `/ask <your questions>`")
     else:
-        await message.reply(gemini(text))
+        await message.edit(gemini(text))
         if message.text:
             await message.delete()

@@ -4,7 +4,7 @@ from pyrogram import Client, filters
 
 async def urban(message):
     word = message.text.split(maxsplit=1)[1]
-    m = await message.reply(f"**Searching for** `{word}`")
+    m = await message.edit(f"**Searching for** `{word}`")
     try:
         response =  await get_json(
             f"http://api.urbandictionary.com/v0/define?term={word}",
@@ -24,7 +24,7 @@ async def urban(message):
 
 async def meaning(message):
     word = message.text.split(maxsplit=1)[1]
-    m = await message.reply(f"**Searching for** `{word}`")
+    m = await message.edit(f"**Searching for** `{word}`")
     await asyncio.sleep(2)
     try:
         ft = f"<b>Search Query: </b><code>{word.title()}</code>\n\n"
@@ -85,13 +85,13 @@ async def get_json(url):
             return await response.json()
 
 
-@Client.on_message(filters.command(["urban", "ud"], prefixes="."))
+@Client.on_message(filters.command(["urban", "ud"], prefixes=".") & filters.me)
 async def get_urban(_, message):
     if message.text:
         await message.delete()
     await urban(message)
 
-@Client.on_message(filters.command(["meaning", "m"], prefixes="."))
+@Client.on_message(filters.command(["meaning", "m"], prefixes=".") & filters.me)
 async def get_meaning(_, message):
     if message.text:
         await message.delete()

@@ -24,4 +24,4 @@ async def get_quote(_, message):
     if message.text:
         await message.delete()
     quotes = await get_quotes()
-    await message.reply(f"{quotes}")
+    await message.edit(f"{quotes}")

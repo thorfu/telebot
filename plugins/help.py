@@ -1,10 +1,10 @@
 from pyrogram import Client, filters
 
-@Client.on_message(filters.command(["help", "h"], prefixes="."))
+@Client.on_message(filters.command(["help", "h"], prefixes=".") & filters.me)
 async def help(_, message):
     if message.text:
         await message.delete()
-    await message.reply(
+    await message.edit(
         f"**Commands**\n\n"
         "`.ping` - Check the bot's ping\n"
         "`.urban or .ud <word>` - Get the urban dictionary meaning of the word\n"
