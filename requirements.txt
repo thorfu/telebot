@@ -5,3 +5,8 @@ aiohttp
 requests
 pillow
 nltk
+youtube-search
+youtube-search-python
+yt-dlp
+telegraph
+wget
