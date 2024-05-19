@@ -1,5 +1,5 @@
 import os
-import logging
+import logging, asyncio
 from pyrogram import Client, filters
 from telegraph import upload_file
 from utils import get_file_id
@@ -11,10 +11,13 @@ async def telegraph_upload(bot, update):
     replied = update.reply_to_message
     if not replied:
         await update.edit("Reply to a media file under 5MB to upload to telegra.ph!")
+        await asyncio.sleep(5)
         return
     file_info = get_file_id(replied)
     if not file_info:
         await update.edit("Not supported!")
+        await asyncio.sleep(5)
+        await update.delete()
         return
     text = await update.edit(text="<code>Downloading to my server ...</code>", disable_web_page_preview=True)   
     media = await update.reply_to_message.download()   
