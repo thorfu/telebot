@@ -2,7 +2,7 @@ import logging
 from pyrogram import Client
 from info import API_ID, API_HASH, SESSION
 from aiohttp import web
-from route import web_server
+from plugins.route import web_server
 
 class Bot(Client):
 
