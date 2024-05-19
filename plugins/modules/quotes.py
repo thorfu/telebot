@@ -1,4 +1,5 @@
 import aiohttp
+from pyrogram import Client, filters
 
 async def get_quotes():
     url = "https://api.quotable.io/quotes/random"
@@ -17,3 +18,10 @@ async def get_quotes():
                 return quote_data.get("content", None)
             else:
                 return None
+
+@Client.on_message(filters.command(["quotes", "q", "quote"], prefixes=".") & filters.me)
+async def get_quote(_, message):
+    if message.text:
+        await message.delete()
+    quotes = await get_quotes()
+    await message.reply(f"{quotes}")

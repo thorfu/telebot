@@ -1,5 +1,6 @@
 import aiohttp
 import asyncio
+from pyrogram import Client, filters
 
 async def urban(message):
     word = message.text.split(maxsplit=1)[1]
@@ -82,3 +83,16 @@ async def get_json(url):
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
             return await response.json()
+
+
+@Client.on_message(filters.command(["urban", "ud"], prefixes="."))
+async def get_urban(_, message):
+    if message.text:
+        await message.delete()
+    await urban(message)
+
+@Client.on_message(filters.command(["meaning", "m"], prefixes="."))
+async def get_meaning(_, message):
+    if message.text:
+        await message.delete()
+    await meaning(message)

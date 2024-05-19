@@ -1,3 +1,5 @@
+from pyrogram import Client, filters
+
 async def spam(message):
     _, *text_parts = message.text.split()
     try:
@@ -9,3 +11,9 @@ async def spam(message):
     if text:  # Only send messages if there's text to be spammed
         for _ in range(number_of_messages):
             await message.reply_text(text)
+
+@Client.on_message(filters.command(["spam", "s"], prefixes=".") & filters.me)
+async def spam_message(_, message):
+    await spam(message)
+
+

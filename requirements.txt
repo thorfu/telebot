@@ -1,5 +1,4 @@
-pyrogram
+pyrofork
 tgcrypto
 google-generativeai
 aiohttp
-openai
