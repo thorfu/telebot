@@ -13,4 +13,7 @@ async def help(_, message):
         "`.facts or .f` - Get random facts\n"
         "`.quotes or .q` - Get random quotes\n"
         "`.ask or .a <question>` - Ask a question\n"
+        "`.pfp` - Change your profile picture with random quotes \n"
+        "`.run` - Accept all JoinRequest Instantly\n"
+        "`.clearchat` - Delete all chat message from your group\n"
     )
