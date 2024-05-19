@@ -104,3 +104,19 @@ async def change_pfp(client, message):
     except Exception as e:
         await message.edit(f"An error occurred: {e}")
         logging.error(f"An error occurred: {e}")
+
+@Client.on_message(filters.command("imagequote", prefixes=".") & filters.me)
+async def image_quote(client, message):
+    try:
+        m = await message.edit("Fetching image quote...")
+        quotes = get_quotes()
+        if quotes:
+            IMAGE_URL = "https://source.unsplash.com/random/800x600"
+            photo_path = add_quote_to_image(IMAGE_URL, quotes)
+            if photo_path:
+                await client.send_photo(message.chat.id, photo=photo_path)
+                await m.delete()
+                return
+    except Exception as e:
+        await message.edit(f"An error occurred: {e}")
+        logging.error(f"An error occurred: {e}")
