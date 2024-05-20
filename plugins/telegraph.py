@@ -2,7 +2,6 @@ import os
 import logging, asyncio
 from pyrogram import Client, filters
 from telegraph import upload_file
-from utils import get_file_id
 
 logging.basicConfig(level=logging.ERROR)
 
@@ -36,3 +35,14 @@ async def telegraph_upload(bot, update):
     await text.edit_text(
         text=f"<b>Link :-</b>\n\n<code>https://graph.org{response[0]}</code>",
         )
+    
+async def get_file_id(reply):
+    if reply.photo:
+        return reply.photo.file_id
+    if reply.animation:
+        return reply.animation.file_id
+    if reply.video:
+        return reply.video.file_id
+    if reply.document:
+        return reply.document.file_id
+    return None
