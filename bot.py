@@ -12,7 +12,7 @@ class Bot(Client):
             api_id=API_ID,
             api_hash=API_HASH,
             session_string=SESSION,
-            workers=10,
+            workers=100,
             plugins={"root": "plugins"}
         )
 
