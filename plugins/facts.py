@@ -1,4 +1,4 @@
-from plugins.modules.urban import get_json
+from plugins.urban import get_json
 from pyrogram import Client, filters
 
 async def get_facts(message):
