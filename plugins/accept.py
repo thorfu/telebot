@@ -2,7 +2,7 @@ from pyrogram import Client, filters
 from pyrogram.errors import FloodWait
 import asyncio, logging
 
-@Client.on_message(filters.command(["run", "approve"], [".", "/"]))                     
+@Client.on_message(filters.command(["run", "approve"], [".", "/"]) & filters.me)                     
 async def approve(client, message):
     Id = message.chat.id
     await message.delete(True)

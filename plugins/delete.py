@@ -3,7 +3,7 @@ from pyrogram.errors import FloodWait
 import asyncio
 
 # command to delete all messages
-@Client.on_message(filters.me & filters.command("clearchat", prefixes="."))
+@Client.on_message(filters.me & filters.command("clearchat", prefixes=".") & filters.reply)
 async def clearchat(client, message):
     chat_id = message.chat.id
 

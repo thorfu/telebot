@@ -52,7 +52,7 @@ async def demote(client, message):
 async def pin(client, message):
     try:
         if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
-            await client.pin_chat_message(message.chat.id, message.reply_to_message.message_id)
+            await client.pin_chat_message(message.chat.id, message.reply_to_message.id)
     except Exception as e:
         await message.edit_text(f"{e}")
 
@@ -84,6 +84,6 @@ async def unmute(client, message):
 async def delete(client, message):
     try:
         if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
-            await client.delete_messages(message.chat.id, message.reply_to_message.message_id)
+            await client.delete_messages(message.chat.id, message.reply_to_message.id)
     except Exception as e:
         await message.edit_text(f"{e}")

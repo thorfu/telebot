@@ -85,14 +85,3 @@ async def get_json(url):
             return await response.json()
 
 
-@Client.on_message(filters.command(["urban", "ud"], prefixes=".") & filters.me)
-async def get_urban(_, message):
-    if message.text:
-        await message.delete()
-    await urban(message)
-
-@Client.on_message(filters.command(["meaning", "m"], prefixes=".") & filters.me)
-async def get_meaning(_, message):
-    if message.text:
-        await message.delete()
-    await meaning(message)
