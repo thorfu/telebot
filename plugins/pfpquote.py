@@ -3,7 +3,7 @@ import requests
 from io import BytesIO
 import textwrap
 import logging
-from plugins.quote import get_quotes
+from plugins.quotes import get_quotes
 import asyncio
 import logging
 from pyrogram import Client, filters
