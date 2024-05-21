@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-import os
+import os, time
 import requests, wget
 from youtube_search import YoutubeSearch
 from youtubesearchpython import SearchVideos
@@ -70,6 +70,7 @@ async def vsong(client, message):
             "logtostderr": False,
             "quiet": True,
         }
+        time.sleep(2)  # delay for 5 seconds
         with YoutubeDL(opts) as ytdl:
             ytdl_data = ytdl.extract_info(url, download=True)
         video_file = f"{ytdl_data['id']}.mp4"
@@ -86,4 +87,4 @@ async def vsong(client, message):
             if files and os.path.exists(files):
                 os.remove(files)
     except Exception as e:
-        return await message.edit_text(f"An error occurred: `{str(e)}`")
+        return await message.edit_text(f"An error occurred: `{str(e)}")
