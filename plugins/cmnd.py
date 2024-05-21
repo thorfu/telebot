@@ -44,14 +44,14 @@ async def ping(_, message):
 
 typing_on = False
 @Client.on_message(filters.command("typing", prefixes=".") & filters.me)
-async def typing(_, message):
+async def typing(client, message):
     global typing_on
     typing_on = not typing_on
     if typing_on:
         while True:
             if not typing_on:
                 break
-            await message.chat.send_action(message.chat.id, enums.ChatAction.TYPING)
+            await client.send_chat_action(message.chat.id, enums.ChatAction.TYPING)
             await asyncio.sleep(5)
     
 @Client.on_message(filters.command(["facts", "f"], prefixes=".") & filters.me)
