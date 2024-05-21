@@ -61,7 +61,6 @@ async def vsong(client, message):
         if not urlissed:
             return await message.edit("Invalid Command")
         msg = await message.edit_text("Fetching...")
-        pablo = await msg.edit_text("Uploading... |" + "-"*40 + "| 0.0%")
         search = YoutubeSearch(f"{urlissed}", max_results=1).to_dict()
         video_info = search[0]
         url = f"https://www.youtube.com{video_info['url_suffix']}"
@@ -91,10 +90,8 @@ async def vsong(client, message):
             file_name=str(ytdl_data["title"]),
             thumb=thumbnail_file,
             supports_streaming=True,
-            progress=progress(current=0, total=100, update_id=pablo),
-            progress_args=(pablo,)
         )
-        await pablo.delete()
+        await msg.delete()
         for files in (thumbnail_file, video_file):
             if files and os.path.exists(files):
                 os.remove(files)
