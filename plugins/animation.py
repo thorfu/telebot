@@ -56,3 +56,13 @@ async def hack_fn(message):
     await message.edit_text(
         "Targeted Account Hacked...!\n\n ✅ File has been successfully uploaded to my server.\nWhatsApp Database:\n`./DOWNLOADS/msgstore.db.crypt12`"
     )
+
+async def ily(message):
+    await asyncio.sleep(1)
+    await message.edit("❤️ I")
+    await asyncio.sleep(0.5)
+    await message.edit("❤️ I Love")
+    await asyncio.sleep(0.5)
+    await message.edit("❤️ I Love You")
+    await asyncio.sleep(3)
+    await message.edit("❤️ I Love You <3")

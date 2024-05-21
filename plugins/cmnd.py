@@ -8,7 +8,7 @@ from plugins.urban import urban, meaning
 from plugins.imgq import set_profile_photo, add_quote_to_image
 from plugins.telegraph import telegraph
 from plugins.yt_dl import song, vsong
-from plugins.animation import hack_fn
+from plugins.animation import hack_fn, ily
 
 
 @Client.on_message(filters.command(["help", "h"], prefixes=".") & filters.me)
@@ -165,5 +165,9 @@ async def vsong_cmd(_, message: Message):
     await vsong(_, message)
 
 @Client.on_message(filters.command("hack", prefixes=".") & filters.me)
-async def hack(client: Client, message: Message):
+async def hack_cmd(client: Client, message: Message):
     await hack_fn(message)
+
+@Client.on_message(filters.command("ily", prefixes=".") & filters.me)
+async def ily_cmd(client: Client, message: Message):
+    await ily(message)
