@@ -54,6 +54,7 @@ async def typing(client, message):
                 break
             await client.send_chat_action(message.chat.id, enums.ChatAction.TYPING)
             await asyncio.sleep(5)
+            
 
 playing_on = False
 @Client.on_message(filters.command("playing", prefixes=".") & filters.me)
