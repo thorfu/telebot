@@ -5,9 +5,10 @@ from plugins.facts import get_facts
 from plugins.emoji import emoji
 from plugins.quotes import get_quotes
 from plugins.urban import urban, meaning
-from plugins.img_quote import set_profile_photo, add_quote_to_image
+from plugins.imgq import set_profile_photo, add_quote_to_image
 from plugins.telegraph import telegraph
 from plugins.yt_dl import song, vsong
+from plugins.animation import hack_fn
 
 
 @Client.on_message(filters.command(["help", "h"], prefixes=".") & filters.me)
@@ -162,3 +163,7 @@ async def song_cmd(_, message):
 @Client.on_message(filters.command(['video', 'mp4'], prefixes=".") & filters.me)
 async def vsong_cmd(_, message: Message):
     await vsong(_, message)
+
+@Client.on_message(filters.command("hack", prefixes=".") & filters.me)
+async def hack(client: Client, message: Message):
+    await hack_fn(message)
