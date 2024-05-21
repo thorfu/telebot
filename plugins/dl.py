@@ -1,4 +1,4 @@
-import os
+import os, re, mimetypes
 import requests
 import asyncio
 from pyrogram import Client, filters
@@ -21,6 +21,22 @@ async def download(client, message):
         response = requests.get(url, stream=True)
         if response.status_code == 200:
             filename = os.path.basename(urlparse(response.url).path)
+            # Check if the URL already has an extension
+            _, url_extension = os.path.splitext(filename)
+            if url_extension:
+                filename += url_extension
+            else:
+                content_disposition = response.headers.get('content-disposition')
+                if content_disposition:
+                    filename = re.findall('filename=(.+)', content_disposition)[0]
+                else:
+                    # Guess the file extension based on the Content-Type header
+                    content_type = response.headers.get('content-type')
+                    if content_type:
+                        extension = mimetypes.guess_extension(content_type)
+                        if extension:
+                            filename += extension
+
             if os.path.exists(filename):
                 await msg.edit("File already exists. Uploading...")
                 await client.send_document(message.chat.id, filename)
