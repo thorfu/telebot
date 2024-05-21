@@ -60,7 +60,8 @@ async def vsong(client, message):
         urlissed = message.text.split(None, 1)[1] if " " in message.text else None
         if not urlissed:
             return await message.edit("Invalid Command")
-        pablo = await message.edit_text("Finding The Video From Youtube...")
+        msg = await message.edit_text("Fetching...")
+        pablo = await msg.edit_text("Uploading... |" + "-"*40 + "| 0.0%")
         search = YoutubeSearch(f"{urlissed}", max_results=1).to_dict()
         video_info = search[0]
         url = f"https://www.youtube.com{video_info['url_suffix']}"
@@ -83,7 +84,6 @@ async def vsong(client, message):
             ytdl_data = ytdl.extract_info(url, download=True)
         video_file = f"{ytdl_data['id']}.mp4"
 
-        await pablo.edit_text("Uploading... |" + "-"*40 + "| 0.0%")
         await client.send_video(
             message.chat.id,
             video=open(video_file, "rb"),
@@ -91,7 +91,7 @@ async def vsong(client, message):
             file_name=str(ytdl_data["title"]),
             thumb=thumbnail_file,
             supports_streaming=True,
-            progress=progress,
+            progress=progress(current=0, total=100, update_id=pablo),
             progress_args=(pablo,)
         )
         await pablo.delete()
