@@ -94,11 +94,16 @@ async def change_pfp(client, message):
 
 @Client.on_message(filters.command("bio", prefixes=".") & filters.me)
 async def change_bio(client, message):
-    while True:
-        quote = await get_quotes()
-        if len(quote) <= 70:
-            await client.update_profile(bio=quote)
-            break        
+    try:
+        msg = await message.edit("Changing bio...")
+        while True:
+            quote = await get_quotes()
+            if len(quote) <= 70:
+                await client.update_profile(bio=quote)
+                await msg.edit(f"Bio has been changed to: {quote}")
+                break    
+    except Exception as e:
+        await message.edit(f"An error occurred: {e}")            
 
 @Client.on_message(filters.command("imgq", prefixes=".") & filters.me)
 async def image_quote(client, message):
