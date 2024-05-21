@@ -21,7 +21,6 @@ async def urban(message):
     except Exception as e:
         await m.edit(text="`The Urban Dictionary API could not be reached`")
 
-
 async def meaning(message):
     word = message.text.split(maxsplit=1)[1]
     m = await message.edit(f"**Searching for** `{word}`")
@@ -31,27 +30,22 @@ async def meaning(message):
         response = await get_json(
             f"https://api.dictionaryapi.dev/api/v2/entries/en/{word}",
         )
-        if "message" not in response:
+        if "word" in response[0]:
             result = response[0]
-            if "phonetic" in result:
-                if phonetic := result["phonetic"]:
-                    ft += f"<b>Phonetic: </b>\n<code>{phonetic}</code>\n\n"
-            meanings = result["meanings"]
-            synonyms = []
-            antonyms = []
-            for content in meanings:
-                ft += f"<u><b>Meaning ({content['partOfSpeech']}):</b></u>\n"
-                for count, text in enumerate(content["definitions"], 1):
-                    ft += f"<b>{count}.</b> {text['definition']}\n"
-                if content["synonyms"]:
-                    synonyms.extend(content["synonyms"])
-                if content["antonyms"]:
-                    antonyms.extend(content["antonyms"])
-                ft += "\n"
-            if synonyms:
-                ft += f"<b>Synonyms: </b><code>{', '.join(synonyms)}</code>\n"
-            if antonyms:
-                ft += f"<b>Antonyms: </b><code>{', '.join(antonyms)}</code>\n"
+            if "phonetics" in result:
+                for phonetic in result["phonetics"]:
+                    if phonetic.get("text"):
+                        ft += f"<b>Phonetic: </b>\n<code>{phonetic['text']}</code>\n\n"
+            if "meanings" in result:
+                for meaning in result["meanings"]:
+                    ft += f"<u><b>Meaning ({meaning['partOfSpeech']}):</b></u>\n"
+                    for count, definition in enumerate(meaning["definitions"], 1):
+                        ft += f"<b>{count}.</b> {definition['definition']}\n"
+                        if definition.get("synonyms"):
+                            ft += f"<b>Synonyms: </b><code>{', '.join(definition['synonyms'])}</code>\n"
+                        if definition.get("antonyms"):
+                            ft += f"<b>Antonyms: </b><code>{', '.join(definition['antonyms'])}</code>\n"
+                    ft += "\n"
         else:
             ft += "`Sorry pal, we couldn't find Meaning for the word you were looking for.`"
         await m.edit(ft, parse_mode="html")
