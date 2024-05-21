@@ -19,7 +19,7 @@ async def telegraph(client, message):
         try:
             media = upload_file(file)
             if media:
-                await message.edit(f'https://telegra.ph{media[0]}')
+                await message.edit(f"Telegraph Link - <code>https://telegra.ph{media[0]}</code>")
             os.remove(file)
         except Exception as e:
             await message.edit(str(e))
