@@ -50,45 +50,42 @@ async def song(_, message):
         os.remove(thumb_name)
 
 async def vsong(client, message: Message):
-    urlissed = message.text.split(None, 1)[1] if " " in message.text else None
-    if not urlissed:
-        return await message.edit("Invalid Command")     
-    pablo = await message.edit(message.chat.id, f"Finding The Video From Youtube...")
-    search = SearchVideos(f"{urlissed}", offset=1, mode="dict", max_results=1)
-    video_info = search.result()["search_result"][0]
-    url = video_info["link"]
-    thumbnail_url = f"https://img.youtube.com/vi/{video_info['id']}/hqdefault.jpg"
-    thumbnail_file = wget.download(thumbnail_url)
-    opts = {
-        "format": "best",
-        "addmetadata": True,
-        "key": "FFmpegMetadata",
-        "prefer_ffmpeg": True,
-        "geo_bypass": True,
-        "nocheckcertificate": True,
-        "postprocessors": [{"key": "FFmpegVideoConvertor", "preferedformat": "mp4"}],
-        "outtmpl": "%(id)s.mp4",
-        "logtostderr": False,
-        "quiet": True,
-    }
     try:
+        urlissed = message.text.split(None, 1)[1] if " " in message.text else None
+        if not urlissed:
+            return await message.edit("Invalid Command")
+        pablo = await message.edit(message.chat.id, f"Finding The Video From Youtube...")
+        search = SearchVideos(f"{urlissed}", offset=1, mode="dict", max_results=1)
+        video_info = search.result()["search_result"][0]
+        url = video_info["link"]
+        thumbnail_url = f"https://img.youtube.com/vi/{video_info['id']}/hqdefault.jpg"
+        thumbnail_file = wget.download(thumbnail_url)
+        opts = {
+            "format": "best",
+            "addmetadata": True,
+            "key": "FFmpegMetadata",
+            "prefer_ffmpeg": True,
+            "geo_bypass": True,
+            "nocheckcertificate": True,
+            "postprocessors": [{"key": "FFmpegVideoConvertor", "preferedformat": "mp4"}],
+            "outtmpl": "%(id)s.mp4",
+            "logtostderr": False,
+            "quiet": True,
+        }
         with YoutubeDL(opts) as ytdl:
             ytdl_data = ytdl.extract_info(url, download=True)
+        video_file = f"{ytdl_data['id']}.mp4"
+        await client.send_video(
+            message.chat.id,
+            video=open(video_file, "rb"),
+            duration=int(ytdl_data["duration"]),
+            file_name=str(ytdl_data["title"]),
+            thumb=thumbnail_file,
+            supports_streaming=True,        
+        )
+        await pablo.delete()
+        for files in (thumbnail_file, video_file):
+            if files and os.path.exists(files):
+                os.remove(files)
     except Exception as e:
-        return await pablo.edit_text(f"Download Failed \n**Error :** `{str(e)}`")       
-
-    video_file = f"{ytdl_data['id']}.mp4"
-
-    await client.send_video(
-        message.chat.id,
-        video=open(video_file, "rb"),
-        duration=int(ytdl_data["duration"]),
-        file_name=str(ytdl_data["title"]),
-        thumb=thumbnail_file,
-        supports_streaming=True,        
-        reply_to_message_id=message.id 
-    )
-    await pablo.delete()
-    for files in (thumbnail_file, video_file):
-        if files and os.path.exists(files):
-            os.remove(files)
+        return await pablo.edit_text(f"An error occurred: `{str(e)}`")
