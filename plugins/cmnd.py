@@ -27,6 +27,7 @@ async def help_cmd(_, message):
         "`.song <song name>` - Download song from youtube\n"
         "`.video <video name>` - Download video from youtube\n"
         "`.spam <number> <text>` - Spam the text\n"
+        "`.one9 <on | off>` - To activate One9word game cheat\n\n"
         "`.run` - Accept all JoinRequest Instantly\n"
         "`.clearchat` - Delete all chat message from your group\n",
         parse_mode=enums.ParseMode.MARKDOWN

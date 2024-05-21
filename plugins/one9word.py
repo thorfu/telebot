@@ -8,7 +8,6 @@ nltk.download('words')
 ONE9 = False
 starting_letter_pattern = r"start with ([A-Z])"
 min_length_pattern = r"include at least (\d+) letters"
-trigger_pattern = r"Turn: ᖇᗩᕼᑌᒪ.*" # Replace "ᖇᗩᕼᑌᒪ" with your own trigger pattern (Your telegram profile name)
 
 
 @Client.on_message(filters.command("one9", prefixes=".") & filters.me)
@@ -27,7 +26,11 @@ async def one9word(client, message):
 @Client.on_message(filters.text)
 async def handle_incoming_message(client, message):
     global ONE9
-    if ONE9:
+    while True:
+        if not ONE9:
+            break
+        profile_name = message.from_user.first_name if message.from_user.last_name is None else f"{message.from_user.first_name} {message.from_user.last_name}"
+        trigger_pattern = f"Turn: {profile_name}."
         puzzle_text = message.text
         if re.search(trigger_pattern, puzzle_text):
             starting_letter_match = re.search(starting_letter_pattern, puzzle_text)
