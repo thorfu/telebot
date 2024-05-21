@@ -21,12 +21,12 @@ async def help_cmd(_, message):
         "`.facts or .f` - Get random facts\n"
         "`.quotes or .q` - Get random quotes\n"
         "`.ask or .a <question>` - Ask a question\n"
-        "`.pfp` - Change your profile picture with random quotes\n"
+        "`.pfq` - Change your profile picture with random quotes\n"
         "`.bio` - Change your bio with random quotes\n"
         "`.imgq` - Generate image with random quotes\n"
         "`.telegraph` - Create a telegraph post\n"
-        "`.song <song name>` - Download song from youtube\n"
-        "`.video <video name>` - Download video from youtube\n"
+        "`.song <song name | song url>` - Download song from youtube\n"
+        "`.video <video name | video url>` - Download video from youtube\n"
         "`.spam <number> <text>` - Spam the text\n"
         "`.one9 <on | off>` - To activate One9word game cheat\n"
         "`.approve` - Approve all joinRequest\n"
@@ -79,7 +79,7 @@ async def get_meaning(_, message):
     await meaning(message)
 
 # Command to change profile picture
-@Client.on_message(filters.command("pfp", prefixes=".") & filters.me)
+@Client.on_message(filters.command("pfq", prefixes=".") & filters.me)
 async def change_pfp(client, message):
     try:
         m = await message.edit("Changing profile pic...")
