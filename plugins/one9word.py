@@ -29,7 +29,8 @@ async def handle_incoming_message(client, message):
     while True:
         if not ONE9:
             break
-        profile_name = message.from_user.first_name if message.from_user.last_name is None else f"{message.from_user.first_name} {message.from_user.last_name}"
+        me = client.get_me()
+        profile_name = me.first_name if me.last_name is None else f"{me.first_name} {me.last_name}"
         trigger_pattern = f"Turn: {profile_name}."
         puzzle_text = message.text
         if re.search(trigger_pattern, puzzle_text):
