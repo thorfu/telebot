@@ -1,8 +1,6 @@
 from __future__ import unicode_literals
 import os
 import requests, wget
-from pyrogram import filters, Client
-from pyrogram.types import Message
 from youtube_search import YoutubeSearch
 from youtubesearchpython import SearchVideos
 from yt_dlp import YoutubeDL
@@ -49,7 +47,7 @@ async def song(_, message):
         os.remove(audio_file)
         os.remove(thumb_name)
 
-async def vsong(client, message: Message):
+async def vsong(client, message):
     try:
         urlissed = message.text.split(None, 1)[1] if " " in message.text else None
         if not urlissed:
@@ -88,4 +86,4 @@ async def vsong(client, message: Message):
             if files and os.path.exists(files):
                 os.remove(files)
     except Exception as e:
-        return await pablo.edit_text(f"An error occurred: `{str(e)}`")
+        return await message.edit_text(f"An error occurred: `{str(e)}`")

@@ -51,7 +51,7 @@ async def meaning(message):
             ft += "`Sorry, we couldn't find Meaning for the word you were looking for.`"
         await m.edit(ft, parse_mode="html")
     except Exception as e:
-        await m.edit(text="`The Dictionary API could not be reached`")
+        await m.edit(text=f"{e}")
 
 def replacetext(text):
     return (

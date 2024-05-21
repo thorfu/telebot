@@ -1,5 +1,6 @@
 import time, asyncio, logging
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from plugins.facts import get_facts
 from plugins.emoji import emoji
 from plugins.quotes import get_quotes
@@ -110,5 +111,5 @@ async def song_cmd(_, message):
     await song(_, message)
 
 @Client.on_message(filters.command(['video', 'mp4'], prefixes=".") & filters.me)
-async def vsong_cmd(_, message):
+async def vsong_cmd(_, message: Message):
     await vsong(_, message)
