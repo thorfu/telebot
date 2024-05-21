@@ -4,7 +4,6 @@ from io import BytesIO
 import textwrap
 import logging
 from plugins.quotes import get_quotes
-import asyncio
 import logging
 
 def add_quote_to_image(image_url, quote, output_path='output_image.jpg'):
@@ -71,7 +70,7 @@ def add_quote_to_image(image_url, quote, output_path='output_image.jpg'):
 async def set_profile_photo(client):
     IMAGE_URL = "https://source.unsplash.com/random/800x600"
     try:
-        quotes = get_quotes()
+        quotes = await get_quotes()
         if not quotes:
             logging.error("No quotes found")
             return False

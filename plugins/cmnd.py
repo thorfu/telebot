@@ -5,7 +5,7 @@ from plugins.facts import get_facts
 from plugins.emoji import emoji
 from plugins.quotes import get_quotes
 from plugins.urban import urban, meaning
-from plugins.pfpquote import set_profile_photo, add_quote_to_image
+from plugins.img_quote import set_profile_photo, add_quote_to_image
 from plugins.telegraph import telegraph
 from plugins.yt_dl import song, vsong
 
