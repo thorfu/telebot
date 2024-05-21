@@ -31,25 +31,17 @@ async def ping(_, message):
     m = await message.edit("Pong!")
     end = time.time()
     await m.edit(f"Pong! {round(end-start, 2)}s") 
-    if message.text:
-        await message.delete()
 
 @Client.on_message(filters.command(["facts", "f"], prefixes=".") & filters.me)
 async def fact_msg(_, message):
-    if message.text:
-        await message.delete()
     await get_facts(message)
 
 @Client.on_message(filters.command(["emoji", "e"], prefixes=".") & filters.me)
 async def get_emoji(_, message):
-    if message.text:
-        await message.delete()
     await emoji(message)
 
 @Client.on_message(filters.command(["quotes", "q", "quote"], prefixes=".") & filters.me)
 async def get_quote(_, message):
-    if message.text:
-        await message.delete()
     quotes = await get_quotes()
     await message.edit(f"{quotes}")
 
@@ -59,14 +51,10 @@ async def spam_message(_, message):
 
 @Client.on_message(filters.command(["urban", "ud"], prefixes=".") & filters.me)
 async def get_urban(_, message):
-    if message.text:
-        await message.delete()
     await urban(message)
 
 @Client.on_message(filters.command(["meaning", "m"], prefixes=".") & filters.me)
 async def get_meaning(_, message):
-    if message.text:
-        await message.delete()
     await meaning(message)
 
 # Command to change profile picture
