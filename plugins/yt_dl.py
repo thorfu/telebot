@@ -47,15 +47,23 @@ async def song(_, message):
         os.remove(audio_file)
         os.remove(thumb_name)
 
+async def progress(current, total, update_id):
+    filled_len = int(current * 40 / total)
+    bar = '█' * filled_len + '-' * (40 - filled_len)
+    percent = round(current * 100 / total, 2)
+    text = f"Uploading... |{bar}| {percent}%"
+    await update_id.edit_text(text)
+    time.sleep(0.1)  # to prevent flood limit
+
 async def vsong(client, message):
     try:
         urlissed = message.text.split(None, 1)[1] if " " in message.text else None
         if not urlissed:
             return await message.edit("Invalid Command")
         pablo = await message.edit_text("Finding The Video From Youtube...")
-        search = SearchVideos(f"{urlissed}", offset=1, mode="dict", max_results=1)
-        video_info = search.result()["search_result"][0]
-        url = video_info["link"]
+        search = YoutubeSearch(f"{urlissed}", max_results=1).to_dict()
+        video_info = search[0]
+        url = f"https://www.youtube.com{video_info['url_suffix']}"
         thumbnail_url = f"https://img.youtube.com/vi/{video_info['id']}/hqdefault.jpg"
         thumbnail_file = wget.download(thumbnail_url)
         opts = {
@@ -70,17 +78,21 @@ async def vsong(client, message):
             "logtostderr": False,
             "quiet": True,
         }
-        time.sleep(2)  # delay for 5 seconds
+        time.sleep(0.5)  # delay for 5 seconds
         with YoutubeDL(opts) as ytdl:
             ytdl_data = ytdl.extract_info(url, download=True)
         video_file = f"{ytdl_data['id']}.mp4"
+
+        await pablo.edit_text("Uploading... |" + "-"*40 + "| 0.0%")
         await client.send_video(
             message.chat.id,
             video=open(video_file, "rb"),
             duration=int(ytdl_data["duration"]),
             file_name=str(ytdl_data["title"]),
             thumb=thumbnail_file,
-            supports_streaming=True,        
+            supports_streaming=True,
+            progress=progress,
+            progress_args=(pablo,)
         )
         await pablo.delete()
         for files in (thumbnail_file, video_file):
