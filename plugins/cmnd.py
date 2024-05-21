@@ -3,7 +3,6 @@ from pyrogram import Client, filters
 from plugins.facts import get_facts
 from plugins.emoji import emoji
 from plugins.quotes import get_quotes
-from plugins.spam import spam
 from plugins.urban import urban, meaning
 from plugins.pfpquote import set_profile_photo, add_quote_to_image
 from plugins.telegraph import telegraph
@@ -49,7 +48,17 @@ async def get_quote(_, message):
 
 @Client.on_message(filters.command(["spam", "s"], prefixes=".") & filters.me)
 async def spam_message(_, message):
-    await spam(message)
+    _, *text_parts = message.text.split()
+    try:
+        number_of_messages = int(text_parts[0])
+        text = ' '.join(text_parts[1:])
+    except ValueError:
+        number_of_messages = 10
+        text = ' '.join(text_parts)
+    if text:  # Only send messages if there's text to be spammed
+        for _ in range(number_of_messages):
+            await message.reply_text(text)
+
 
 @Client.on_message(filters.command(["urban", "ud"], prefixes=".") & filters.me)
 async def get_urban(_, message):
