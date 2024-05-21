@@ -33,7 +33,7 @@ async def handle_incoming_message(client, message):
         if not owner_info:
             owner_info = await client.get_me()
         profile_name = owner_info.first_name if owner_info.last_name is None else f"{owner_info.first_name} {owner_info.last_name}"
-        trigger_pattern = f"Turn: {profile_name}."
+        trigger_pattern = f"Turn: {profile_name}"
         puzzle_text = message.text
 
         if re.search(trigger_pattern, puzzle_text):
