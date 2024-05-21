@@ -52,6 +52,7 @@ async def download(client, message):
                         downloaded_size += len(chunk)
                         progress = (downloaded_size / total_size) * 100
                         try:
+                            await asyncio.sleep(1)  
                             await msg.edit(f"Downloading... {progress:.2f}%")
                         except FloodWait as e:
                             await asyncio.sleep(e.x)  # Sleep for the time recommended by Telegram
