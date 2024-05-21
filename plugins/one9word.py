@@ -8,6 +8,7 @@ nltk.download('words')
 ONE9 = False
 starting_letter_pattern = r"start with ([A-Z])"
 min_length_pattern = r"include at least (\d+) letters"
+owner_info = {}
 
 
 @Client.on_message(filters.command("one9", prefixes=".") & filters.me)
@@ -25,14 +26,16 @@ async def one9word(client, message):
 
 @Client.on_message(filters.text)
 async def handle_incoming_message(client, message):
-    global ONE9
+    global ONE9, owner_info
     while True:
         if not ONE9:
             break
-        me = await client.get_me()
-        profile_name = me.first_name if me.last_name is None else f"{me.first_name} {me.last_name}"
-        trigger_pattern = f"Turn: {profile_name}"
+        if not owner_info:
+            owner_info = await client.get_me()
+        profile_name = owner_info.first_name if owner_info.last_name is None else f"{owner_info.first_name} {owner_info.last_name}"
+        trigger_pattern = f"Turn: {profile_name}."
         puzzle_text = message.text
+
         if re.search(trigger_pattern, puzzle_text):
             starting_letter_match = re.search(starting_letter_pattern, puzzle_text)
             min_length_match = re.search(min_length_pattern, puzzle_text)
