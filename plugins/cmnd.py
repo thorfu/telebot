@@ -8,7 +8,7 @@ from plugins.urban import urban, meaning
 from plugins.imgq import set_profile_photo, add_quote_to_image
 from plugins.telegraph import telegraph
 from plugins.yt_dl import song, vsong
-from plugins.animation import hack_fn, ily
+from plugins.animation import hack_fn, ily, heart_fn
 
 
 @Client.on_message(filters.command(["help", "h"], prefixes=".") & filters.me)
@@ -171,3 +171,8 @@ async def hack_cmd(client: Client, message: Message):
 @Client.on_message(filters.command("ily", prefixes=".") & filters.me)
 async def ily_cmd(client: Client, message: Message):
     await ily(message)
+
+@Client.on_message(filters.command("heart", prefixes=".") & filters.me)
+async def heart_cmd(client: Client, message: Message):
+    number = message.command[1] if len(message.command) > 1 else 1
+    await heart_fn(number, message)
