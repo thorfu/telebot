@@ -9,12 +9,13 @@ RETRY_TIMES = 3
 
 @Client.on_message(filters.command(["download", "dl"], prefixes=".") & filters.me)
 async def download(client, message):
-    if not message.reply_to_message or len(message.command) < 2:
-        await message.edit("Usage: `.dl <url> ")
-        return
-    url = message.command[1]
-    if not url.startswith("http"):
-        await message.edit("Please provide a valid URL")
+    url = None
+    if message.reply_to_message:
+        url = message.reply_to_message.text
+    elif len(message.command) > 1:
+        url = message.command[1]
+    if not url or not url.startswith(("http", "https")):
+        await message.edit("Please provide a valid URL or reply to a message containing a URL")
         return
     try:
         msg = await message.edit("Downloading...")
