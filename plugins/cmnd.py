@@ -43,7 +43,7 @@ async def ping(_, message):
     await m.edit(f"Pong! {round(end-start, 2)}s") 
 
 typing_on = False
-@Client.on_message(filter.command("typing", prefixes=".") & filters.me)
+@Client.on_message(filters.command("typing", prefixes=".") & filters.me)
 async def typing(_, message):
     global typing_on
     typing_on = not typing_on
