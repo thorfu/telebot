@@ -19,3 +19,5 @@ async def telegraph(client, message):
                 os.remove(file)
             except Exception as e:
                 await message.edit(str(e))
+    else:
+        await message.edit('Reply to a media file with .telegraph')
