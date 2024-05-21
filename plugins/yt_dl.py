@@ -2,7 +2,6 @@ from __future__ import unicode_literals
 import os, time
 import requests, wget
 from youtube_search import YoutubeSearch
-from youtubesearchpython import SearchVideos
 from yt_dlp import YoutubeDL
 
 
