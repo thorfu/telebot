@@ -47,7 +47,7 @@ async def ping(_, message):
     end = time.time()
     await m.edit(f"Pong! {round(end-start, 2)}s") 
 
-@Client.on_message(filters.command("update", [".", "/"]) & filters.private & filters.me)
+@Client.on_message(filters.command("update", [".", "/"]) & filters.me)
 async def deploy(_, message):
     m = await message.edit("Deploying the latest changes...")
     await asyncio.sleep(2)
