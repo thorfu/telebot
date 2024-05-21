@@ -7,7 +7,7 @@ from plugins.spam import spam
 from plugins.urban import urban, meaning
 from plugins.pfpquote import set_profile_photo, add_quote_to_image
 from plugins.telegraph import telegraph
-from yt_dl import song, vsong
+from plugins.yt_dl import song, vsong
 
 
 @Client.on_message(filters.command(["help", "h"], prefixes=".") & filters.me)
