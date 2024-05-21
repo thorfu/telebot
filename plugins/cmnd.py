@@ -54,7 +54,21 @@ async def typing(client, message):
                 break
             await client.send_chat_action(message.chat.id, enums.ChatAction.TYPING)
             await asyncio.sleep(5)
-    
+
+playing_on = False
+@Client.on_message(filters.command("playing", prefixes=".") & filters.me)
+async def playing(client, message):
+    global playing_on
+    playing_on = not playing_on
+    await message.delete()
+    if playing_on:
+        while True:
+            if not playing_on:
+                break
+            await client.send_chat_action(message.chat.id, enums.ChatAction.PLAYING)
+            await asyncio.sleep(5)
+        
+
 @Client.on_message(filters.command(["facts", "f"], prefixes=".") & filters.me)
 async def fact_msg(_, message):
     await get_facts(message)
