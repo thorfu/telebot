@@ -4,7 +4,7 @@ import asyncio
 from pyrogram import Client, filters
 from urllib.parse import urlparse
 
-@Client.on_message(filters.command(["download", "dl"], prefixes=".") & filters.me)
+@Client.on_message(filters.command(["download"], prefixes=".") & filters.me)
 async def download(client, message):
     url = None
     if message.reply_to_message:
