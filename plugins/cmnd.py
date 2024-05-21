@@ -1,5 +1,5 @@
 import time, asyncio, logging
-from pyrogram import Client, filters
+from pyrogram import Client, filters, enums
 from pyrogram.types import Message
 from plugins.facts import get_facts
 from plugins.emoji import emoji
@@ -22,8 +22,14 @@ async def help_cmd(_, message):
         "`.quotes or .q` - Get random quotes\n"
         "`.ask or .a <question>` - Ask a question\n"
         "`.pfp` - Change your profile picture with random quotes\n"
+        "`.imgq` - Generate image with random quotes\n"
+        "`.telegraph` - Create a telegraph post\n"
+        "`.song <song name>` - Download song from youtube\n"
+        "`.video <video name>` - Download video from youtube\n"
+        "`.spam <number> <text>` - Spam the text\n"
         "`.run` - Accept all JoinRequest Instantly\n"
-        "`.clearchat` - Delete all chat message from your group\n"
+        "`.clearchat` - Delete all chat message from your group\n",
+        parse_mode=enums.ParseMode.MARKDOWN
     )
 
 
