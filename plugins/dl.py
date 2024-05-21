@@ -2,6 +2,7 @@ import os, re, mimetypes
 import requests
 import asyncio
 from pyrogram import Client, filters
+from pyrogram.errors import FloodWait
 from urllib.parse import urlparse
 
 @Client.on_message(filters.command(["download", "dl"], prefixes=".") & filters.me)
@@ -15,7 +16,7 @@ async def download(client, message):
         await message.edit("Please provide a valid URL or reply to a message containing a URL")
         return
     try:
-        msg = await message.edit("Wait...")
+        msg = await message.edit("Fetching...")
         await asyncio.sleep(3)  # wait for 3 seconds
         msg = await message.edit("Download started...")
         response = requests.get(url, stream=True)
@@ -50,7 +51,10 @@ async def download(client, message):
                         f.write(chunk)
                         downloaded_size += len(chunk)
                         progress = (downloaded_size / total_size) * 100
-                        await msg.edit(f"Downloading... {progress:.2f}%")
+                        try:
+                            await msg.edit(f"Downloading... {progress:.2f}%")
+                        except FloodWait as e:
+                            await asyncio.sleep(e.x)  # Sleep for the time recommended by Telegram
             await msg.edit("Download complete. Uploading...")
             await asyncio.sleep(1)
             await msg.edit("Uploading...")
