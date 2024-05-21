@@ -13,17 +13,17 @@ starting_letter_pattern = r"start with ([A-Z])"
 min_length_pattern = r"include at least (\d+) letters"
 
 
-@Client.on_message(filters.command("one9", prefixes=".") & filters.me)
+@Client.on_message(filters.command("on9", prefixes=".") & filters.me)
 async def one9word(client, message):
     global ONE9
     global used_words
     msg = message.text.split(None, 1)
     if len(msg) > 1:
         if msg[1] in ["on", "start", "true"]:
-            await message.reply("One9word plugin enabled")
+            await message.edit("On9word plugin enabled")
             ONE9 = True
         elif msg[1] in ["off", "stop", "false"]:
-            await message.reply("One9word plugin disabled")
+            await message.edit("On9word plugin disabled")
             ONE9 = False
             used_words.clear()  # Clear the used words when ONE9 is False
 
