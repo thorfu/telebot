@@ -22,6 +22,7 @@ async def help_cmd(_, message):
         "`.quotes or .q` - Get random quotes\n"
         "`.ask or .a <question>` - Ask a question\n"
         "`.pfp` - Change your profile picture with random quotes\n"
+        "`.bio` - Change your bio with random quotes\n"
         "`.imgq` - Generate image with random quotes\n"
         "`.telegraph` - Create a telegraph post\n"
         "`.song <song name>` - Download song from youtube\n"
