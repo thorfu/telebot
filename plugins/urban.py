@@ -1,6 +1,5 @@
 import aiohttp
 import asyncio
-from pyrogram import Client, filters
 
 async def urban(message):
     word = message.text.split(maxsplit=1)[1]
