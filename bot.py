@@ -8,7 +8,7 @@ class Bot(Client):
 
     def __init__(self):
         super().__init__(
-            name="autofilter",
+            name="telebot",
             api_id=API_ID,
             api_hash=API_HASH,
             session_string=SESSION,
