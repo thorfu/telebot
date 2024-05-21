@@ -47,14 +47,6 @@ async def song(_, message):
         os.remove(audio_file)
         os.remove(thumb_name)
 
-async def progress(current, total, update_id):
-    filled_len = int(current * 40 / total)
-    bar = '█' * filled_len + '-' * (40 - filled_len)
-    percent = round(current * 100 / total, 2)
-    text = f"Uploading... |{bar}| {percent}%"
-    await update_id.edit_text(text)
-    time.sleep(0.1)  # to prevent flood limit
-
 async def vsong(client, message):
     try:
         urlissed = message.text.split(None, 1)[1] if " " in message.text else None
