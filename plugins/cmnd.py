@@ -32,10 +32,10 @@ async def help_cmd(_, message):
         "`.spam <number> <text>` - Spam the text\n"
         "`.on9 <on | off>` - To activate One9word game cheat\n"
         "`.approve` - Approve all joinRequest\n"
-        "`.clearchat` - Delete all chat message from your group\n",
+        "`.clearchat` - Delete all chat message from your group\n"
         "`.update` - Deploy the latest changes\n"
         "`.dl` - download from http url\n"
-        "`.hack` - Hack animation\n"
+        "`.hack` - Hack animation\n",
         parse_mode=enums.ParseMode.MARKDOWN
     )
 
