@@ -1,5 +1,6 @@
 import aiohttp
 import asyncio
+from pyrogram import enums
 
 async def urban(message):
     word = message.text.split(maxsplit=1)[1]
@@ -49,7 +50,7 @@ async def meaning(message):
                     ft += "\n"
         else:
             ft += "`Sorry, we couldn't find Meaning for the word you were looking for.`"
-        await m.edit(ft, parse_mode="html")
+        await m.edit(ft, parse_mode=enums.ParseMode.HTML)
     except Exception as e:
         await m.edit(text=f"{e}")
 
