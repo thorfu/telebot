@@ -86,7 +86,7 @@ async def change_pfp(client, message):
         await message.edit(f"An error occurred: {e}")
         logging.error(f"An error occurred: {e}")
 
-@Client.on_message(filters.command("imagequote", prefixes=".") & filters.me)
+@Client.on_message(filters.command("imgq", prefixes=".") & filters.me)
 async def image_quote(client, message):
     try:
         m = await message.edit("Fetching image quote...")

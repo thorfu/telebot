@@ -52,7 +52,7 @@ async def vsong(client, message):
         urlissed = message.text.split(None, 1)[1] if " " in message.text else None
         if not urlissed:
             return await message.edit("Invalid Command")
-        pablo = await message.edit(message.chat.id, f"Finding The Video From Youtube...")
+        pablo = await message.edit_text("Finding The Video From Youtube...")
         search = SearchVideos(f"{urlissed}", offset=1, mode="dict", max_results=1)
         video_info = search.result()["search_result"][0]
         url = video_info["link"]
