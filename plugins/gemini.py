@@ -53,5 +53,3 @@ async def ask(_, message):
         await message.edit("Use `/ask <your questions>`")
     else:
         await message.edit(gemini(text))
-        if message.text:
-            await message.delete()
