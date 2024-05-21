@@ -15,9 +15,9 @@ async def download(client, message):
         await message.edit("Please provide a valid URL or reply to a message containing a URL")
         return
     try:
-        msg = await message.edit("Waiting for page to load...")
-        await asyncio.sleep(5)  # wait for 10 seconds
-        msg = await message.edit("Downloading...")
+        msg = await message.edit("Wait...")
+        await asyncio.sleep(3)  # wait for 3 seconds
+        msg = await message.edit("Download started...")
         response = requests.get(url, stream=True)
         if response.status_code == 200:
             filename = os.path.basename(urlparse(response.url).path)
@@ -42,10 +42,17 @@ async def download(client, message):
                 await client.send_document(message.chat.id, filename)
                 await message.delete()
                 return
+            total_size = int(response.headers.get('content-length', 0))
+            downloaded_size = 0
             with open(filename, 'wb') as f:
                 for chunk in response.iter_content(chunk_size=1024): 
                     if chunk: 
                         f.write(chunk)
+                        downloaded_size += len(chunk)
+                        progress = (downloaded_size / total_size) * 100
+                        await msg.edit(f"Downloading... {progress:.2f}%")
+            await msg.edit("Download complete. Uploading...")
+            await asyncio.sleep(1)
             await msg.edit("Uploading...")
             m = await client.send_document(message.chat.id, filename)
             if m:
