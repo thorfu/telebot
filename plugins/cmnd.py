@@ -28,7 +28,7 @@ async def help_cmd(_, message):
         "`.imgq` - Generate image with random quotes\n"
         "`.telegraph` - Create a telegraph post\n"
         "`.song <song name | song url>` - Download song from youtube\n"
-        "`.video <video name | video url>` - Download video from youtube\n"
+        "`.video <video url>` - Download video from youtube\n"
         "`.spam <number> <text>` - Spam the text\n"
         "`.on9 <on | off>` - To activate One9word game cheat\n"
         "`.approve` - Approve all joinRequest\n"
