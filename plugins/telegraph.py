@@ -9,8 +9,13 @@ async def telegraph(client, message):
         await message.edit('Reply to a message with .telegraph')
         return
     reply = message.reply_to_message
-    if reply.media:
+    if reply.media or reply.photo or reply.document or reply.animation:
         file = await client.download_media(reply)
+        file_size = os.path.getsize(file)
+        if file_size > 5242880:
+            await message.edit('File size exceeds 5MB.')
+            os.remove(file)
+            return
         try:
             media = upload_file(file)
             if media:
