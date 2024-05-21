@@ -49,6 +49,7 @@ async def get_quote(_, message):
 @Client.on_message(filters.command(["spam", "s"], prefixes=".") & filters.me)
 async def spam_message(_, message):
     _, *text_parts = message.text.split()
+    await message.delete()
     try:
         number_of_messages = int(text_parts[0])
         text = ' '.join(text_parts[1:])
