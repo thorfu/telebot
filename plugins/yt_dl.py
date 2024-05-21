@@ -7,8 +7,8 @@ from youtube_search import YoutubeSearch
 from youtubesearchpython import SearchVideos
 from yt_dlp import YoutubeDL
 
-@Client.on_message(filters.command(['song', 'mp3'], prefixes=".") & filters.me)
-async def song(client, message):
+
+async def song(_, message):
     query = ' '.join(message.command[1:])
     print(query)
     m = await message.edit(f"Searching...")
@@ -49,7 +49,6 @@ async def song(client, message):
         os.remove(audio_file)
         os.remove(thumb_name)
 
-@Client.on_message(filters.command(["video", "mp4"], prefixes=".") & filters.me)
 async def vsong(client, message: Message):
     urlissed = message.text.split(None, 1)[1] if " " in message.text else None
     if not urlissed:

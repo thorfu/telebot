@@ -7,6 +7,7 @@ from plugins.spam import spam
 from plugins.urban import urban, meaning
 from plugins.pfpquote import set_profile_photo, add_quote_to_image
 from plugins.telegraph import telegraph
+from yt_dl import song, vsong
 
 
 @Client.on_message(filters.command(["help", "h"], prefixes=".") & filters.me)
@@ -94,3 +95,10 @@ async def image_quote(client, message):
 async def telegraph_cmd(_, message):
     await telegraph(Client, message)
             
+@Client.on_message(filters.command(['song', 'mp3'], prefixes=".") & filters.me)
+async def song_cmd(_, message):
+    await song(_, message)
+
+@Client.on_message(filters.command(['video', 'mp4'], prefixes=".") & filters.me)
+async def vsong_cmd(_, message):
+    await vsong(_, message)
