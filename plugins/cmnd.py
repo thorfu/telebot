@@ -6,6 +6,7 @@ from plugins.quotes import get_quotes
 from plugins.spam import spam
 from plugins.urban import urban, meaning
 from plugins.pfpquote import set_profile_photo, add_quote_to_image
+from plugins.telegraph import telegraph
 
 
 @Client.on_message(filters.command(["help", "h"], prefixes=".") & filters.me)
@@ -77,7 +78,7 @@ async def change_pfp(client, message):
 async def image_quote(client, message):
     try:
         m = await message.edit("Fetching image quote...")
-        quotes = get_quotes()
+        quotes = await get_quotes()
         if quotes:
             IMAGE_URL = "https://source.unsplash.com/random/800x600"
             photo_path = add_quote_to_image(IMAGE_URL, quotes)
@@ -88,3 +89,8 @@ async def image_quote(client, message):
     except Exception as e:
         await message.edit(f"An error occurred: {e}")
         logging.error(f"An error occurred: {e}")
+
+@Client.on_message(filters.command("telegraph", prefixes=".") & filters.me)
+async def telegraph_cmd(_, message):
+    await telegraph(Client, message)
+            
