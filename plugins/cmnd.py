@@ -47,6 +47,7 @@ typing_on = False
 async def typing(client, message):
     global typing_on
     typing_on = not typing_on
+    await message.delete()
     if typing_on:
         while True:
             if not typing_on:
