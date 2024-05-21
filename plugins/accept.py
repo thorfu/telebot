@@ -10,7 +10,9 @@ async def approve(client, message):
     try:
        while True:
            try:
-               await client.approve_all_chat_join_requests(Id)         
+               result = await client.approve_all_chat_join_requests(Id)
+               if not result:  # If no join request is pending
+                   break         
            except FloodWait as t:
                asyncio.sleep(t.value)
                await client.approve_all_chat_join_requests(Id) 
@@ -20,7 +22,9 @@ async def approve(client, message):
         asyncio.sleep(s.value)
         while True:
            try:
-               await client.approve_all_chat_join_requests(Id)         
+               result = await client.approve_all_chat_join_requests(Id)
+               if not result:  # If no join request is pending
+                   break
            except FloodWait as t:
                asyncio.sleep(t.value)
                await client.approve_all_chat_join_requests(Id) 

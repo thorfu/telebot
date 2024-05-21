@@ -13,6 +13,8 @@ async def clearchat(client, message):
 
     # get all messages
     async for msg in client.get_chat_history(chat_id):
+        if not msg.message_id:
+            break
         try:
             # delete message
             await client.delete_user_history(chat_id, msg.from_user.id)
