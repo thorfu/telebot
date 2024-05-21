@@ -1,4 +1,5 @@
-import time, asyncio, logging
+import time, asyncio, logging, aiohttp
+from info import DEPLOY_HOOK
 from pyrogram import Client, filters, enums
 from pyrogram.types import Message
 from plugins.facts import get_facts
@@ -32,6 +33,9 @@ async def help_cmd(_, message):
         "`.on9 <on | off>` - To activate One9word game cheat\n"
         "`.approve` - Approve all joinRequest\n"
         "`.clearchat` - Delete all chat message from your group\n",
+        "`.update` - Deploy the latest changes\n"
+        "`.dl` - download from http url\n"
+        "`.hack` - Hack animation\n"
         parse_mode=enums.ParseMode.MARKDOWN
     )
 
@@ -42,6 +46,20 @@ async def ping(_, message):
     m = await message.edit("Pong!")
     end = time.time()
     await m.edit(f"Pong! {round(end-start, 2)}s") 
+
+@Client.on_message(filters.command("update", [".", "/"]) & filters.private & filters.me)
+async def deploy(_, message):
+    m = await message.edit("Deploying the latest changes...")
+    await asyncio.sleep(2)
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.post(DEPLOY_HOOK) as resp:
+                if resp.status == 200:
+                    await m.edit("Deploying...!")
+                else:
+                    await m.edit("Failed to deploy!")
+    except Exception as e:
+        await message.edit(f"Error: {str(e)}")    
 
 typing_on = False
 @Client.on_message(filters.command("typing", prefixes=".") & filters.me)

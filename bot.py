@@ -1,4 +1,4 @@
-import logging
+import logging, os
 from pyrogram import Client
 from info import API_ID, API_HASH, SESSION
 from aiohttp import web
@@ -22,8 +22,7 @@ class Bot(Client):
         #web-server
         app = web.AppRunner(await web_server())
         await app.setup()
-        port = "8080"
-        await web.TCPSite(app, "0.0.0.0", port).start()
+        await web.TCPSite(app, "0.0.0.0", port=os.getenv("PORT", 5051)).start()
 
     async def stop(self, *args):
         await super().stop()
