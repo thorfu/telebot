@@ -100,7 +100,7 @@ async def change_bio(client, message):
             quote = await get_quotes()
             if len(quote) <= 70:
                 await client.update_profile(bio=quote)
-                await msg.edit(f"Bio has been changed to: {quote}")
+                await msg.edit(f"**Bio has been changed to:** {quote}")
                 break    
     except Exception as e:
         await message.edit(f"An error occurred: {e}")            
