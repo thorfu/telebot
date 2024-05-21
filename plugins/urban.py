@@ -25,7 +25,7 @@ async def meaning(message):
     m = await message.edit(f"**Searching for** `{word}`")
     await asyncio.sleep(2)
     try:
-        ft = f"<b>Search Query: </b><code>{word.title()}</code>\n\n"
+        ft = f"<b>Search Query: </b><code>{word}</code>\n\n"
         response = await get_json(
             f"https://api.dictionaryapi.dev/api/v2/entries/en/{word}",
         )
@@ -35,6 +35,8 @@ async def meaning(message):
                 for phonetic in result["phonetics"]:
                     if phonetic.get("text"):
                         ft += f"<b>Phonetic: </b>\n<code>{phonetic['text']}</code>\n\n"
+                        if phonetic.get("audio"):
+                            ft += f"<b>Audio: </b>\n<code>{phonetic['audio']}</code>\n\n"
             if "meanings" in result:
                 for meaning in result["meanings"]:
                     ft += f"<u><b>Meaning ({meaning['partOfSpeech']}):</b></u>\n"
@@ -46,11 +48,10 @@ async def meaning(message):
                             ft += f"<b>Antonyms: </b><code>{', '.join(definition['antonyms'])}</code>\n"
                     ft += "\n"
         else:
-            ft += "`Sorry pal, we couldn't find Meaning for the word you were looking for.`"
+            ft += "`Sorry, we couldn't find Meaning for the word you were looking for.`"
         await m.edit(ft, parse_mode="html")
     except Exception as e:
         await m.edit(text="`The Dictionary API could not be reached`")
-
 
 def replacetext(text):
     return (
