@@ -92,8 +92,8 @@ async def image_quote(client, message):
         logging.error(f"An error occurred: {e}")
 
 @Client.on_message(filters.command("telegraph", prefixes=".") & filters.me)
-async def telegraph_cmd(_, message):
-    await telegraph(Client, message)
+async def telegraph_cmd(client, message):
+    await telegraph(client, message)
             
 @Client.on_message(filters.command(['song', 'mp3'], prefixes=".") & filters.me)
 async def song_cmd(_, message):
