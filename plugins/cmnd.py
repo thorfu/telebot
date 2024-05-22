@@ -9,7 +9,7 @@ from plugins.urban import urban, meaning
 from plugins.imgq import set_profile_photo, add_quote_to_image
 from plugins.telegraph import telegraph
 from plugins.yt_dl import song, vsong
-from plugins.animation import hack_fn, ily, heart_fn, scan_fn
+from plugins.animation import hack_fn, ily, heart_fn, scan_fn, rotate_earth, rotate_sun
 
 
 @Client.on_message(filters.command(["help", "h"], prefixes=".") & filters.me)
@@ -189,6 +189,14 @@ async def hack_cmd(client: Client, message: Message):
 @Client.on_message(filters.command("scan", prefixes=".") & filters.me)
 async def scan_cmd(client: Client, message: Message):
     await scan_fn(message)
+
+@Client.on_message(filters.command("earth", prefixes=".") & filters.me)
+async def earth_cmd(client: Client, message: Message):
+    await rotate_earth(message)
+
+@Client.on_message(filters.command("sun", prefixes=".") & filters.me)
+async def sun_cmd(client: Client, message: Message):
+    await rotate_sun(message)
 
 @Client.on_message(filters.command("ily", prefixes=".") & filters.me)
 async def ily_cmd(client: Client, message: Message):
