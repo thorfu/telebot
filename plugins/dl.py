@@ -37,12 +37,6 @@ async def download(client, message):
                         extension = mimetypes.guess_extension(content_type)
                         if extension:
                             filename += extension
-
-            if os.path.exists(filename):
-                await msg.edit("File already exists. Uploading...")
-                await client.send_document(message.chat.id, filename)
-                await message.delete()
-                return
             total_size = int(response.headers.get('content-length', 0))
             downloaded_size = 0
             last_progress = 0
