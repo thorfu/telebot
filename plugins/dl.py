@@ -47,11 +47,11 @@ async def download(client, message):
                         downloaded_size += len(chunk)
                         progress = (downloaded_size / total_size) * 100
                         if progress != last_progress:  # Only edit message if progress has changed
-                            progress_bar_length = 50  # Length of progress bar
+                            progress_bar_length = 10  # Length of progress bar
                             filled_length = int(progress_bar_length * downloaded_size // total_size)
                             progress_bar = '▓' * filled_length + '░' * (progress_bar_length - filled_length)
                             try:
-                                await msg.edit(f"Downloading... {progress:.2f}%\n{progress_bar}")
+                                await msg.edit(f"**Downloading -** {progress:.2f}%\n{progress_bar}")
                                 await asyncio.sleep(0.01)
                             except FloodWait as e:
                                 await asyncio.sleep(e.x)  # Sleep for the time recommended by Telegram
