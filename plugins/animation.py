@@ -1,4 +1,4 @@
-import asyncio
+import asyncio, random
 
 async def hack_fn(message):
     await message.edit_text("Looking for WhatsApp databases in targeted person...")
@@ -57,15 +57,57 @@ async def hack_fn(message):
         "Targeted Account Hacked...!\n\n ✅ File has been successfully uploaded to my server.\nWhatsApp Database:\n`./DOWNLOADS/msgstore.db.crypt12`"
     )
 
+async def scan_fn(message):
+    await message.edit_text("Initializing system scan...")
+    await asyncio.sleep(2)
+    await message.edit_text(
+        "System Scan: 0%\n[░░░░░░░░░░░░░░░░░░░░]\n`Booting up...`\nETA: 0m, 20s"
+    )
+    await asyncio.sleep(2)
+    await message.edit_text(
+        "System Scan: 15%\n[██░░░░░░░░░░░░░░░░░░]\n`Loading system files...`\nETA: 0m, 18s"
+    )
+    await asyncio.sleep(2)
+    await message.edit_text(
+        "System Scan: 30%\n[████░░░░░░░░░░░░░░░░]\n`Scanning directories...`\nETA: 0m, 16s"
+    )
+    await asyncio.sleep(2)
+    await message.edit_text(
+        "System Scan: 45%\n[██████░░░░░░░░░░░░░░]\n`Checking file integrity...`\nETA: 0m, 14s"
+    )
+    await asyncio.sleep(2)
+    await message.edit_text(
+        "System Scan: 60%\n[█████████░░░░░░░░░░░]\n`Analyzing system logs...`\nETA: 0m, 12s"
+    )
+    await asyncio.sleep(2)
+    await message.edit_text(
+        "System Scan: 75%\n[███████████░░░░░░░░░]\n`Inspecting network connections...`\nETA: 0m, 10s"
+    )
+    await asyncio.sleep(2)
+    await message.edit_text(
+        "System Scan: 90%\n[███████████████░░░░░]\n`Finalizing scan...`\nETA: 0m, 08s"
+    )
+    await asyncio.sleep(2)
+    await message.edit_text(
+        "System Scan: 100%\n[████████████████████]\n`Scan complete!`\nETA: 0m, 00s"
+    )
+    await asyncio.sleep(2)
+    await message.edit_text("System scan complete!\nCompiling report...")
+    await asyncio.sleep(2)
+    await message.edit_text(
+        "Scan Report:\n\n ✅ No issues found.\nSystem Status:\n`Healthy`"
+    )
+        
+
 async def ily(message):
-    await asyncio.sleep(1)
-    await message.edit("❤️ I")
-    await asyncio.sleep(0.5)
-    await message.edit("❤️ I Love")
-    await asyncio.sleep(0.5)
-    await message.edit("❤️ I Love You")
+    emojis = ["❤️", "🌹", "💫", "🎉", "💖"]
+    texts = ["I", "Love", "You"]
+    for text in texts:
+        for emoji in emojis:
+            await message.edit(emoji + " " + text)
+            await asyncio.sleep(random.uniform(0.2, 1.0))
+    await message.edit("❤️ I 🌹 Love 💫 You 🎉 <3 💖")
     await asyncio.sleep(3)
-    await message.edit("❤️ I Love You <3")
 
 heart = """
 ㅤ⠀⠀⠀⠀    ⠀⢀⣤⣄
