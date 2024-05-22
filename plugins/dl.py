@@ -4,6 +4,9 @@ import asyncio
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait
 from urllib.parse import urlparse
+import time
+
+
 
 @Client.on_message(filters.command(["download", "dl"], prefixes=".") & filters.me)
 async def download(client, message):
@@ -39,15 +42,16 @@ async def download(client, message):
                             filename += extension
             total_size = int(response.headers.get('content-length', 0))
             downloaded_size = 0
-            last_progress = 0
+            last_update_time = time.time()
             with open(filename, 'wb') as f:
                 for chunk in response.iter_content(chunk_size=1048576): 
                     if chunk: 
                         f.write(chunk)
                         downloaded_size += len(chunk)
                         progress = (downloaded_size / total_size) * 100
-                        if progress != last_progress:  # Only edit message if progress has changed
-                            progress_bar_length = 10  # Length of progress bar
+                        current_time = time.time()
+                        if current_time - last_update_time >= 5:  # Only edit message if 5 seconds have passed
+                            progress_bar_length = 20  # Length of progress bar
                             filled_length = int(progress_bar_length * downloaded_size // total_size)
                             progress_bar = '▓' * filled_length + '░' * (progress_bar_length - filled_length)
                             try:
@@ -55,7 +59,7 @@ async def download(client, message):
                                 await asyncio.sleep(0.01)
                             except FloodWait as e:
                                 await asyncio.sleep(e.x)  # Sleep for the time recommended by Telegram
-                            last_progress = progress  # Update last progress value
+                            last_update_time = current_time  # Update last update time
             await msg.edit("Download complete. Uploading...")
             await asyncio.sleep(1)
             await msg.edit("Uploading...")
