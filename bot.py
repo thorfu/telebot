@@ -19,6 +19,7 @@ class Bot(Client):
     async def start(self):
         await super().start()
         logging.info(f"Bot started")
+        await self.send_message(chat_id="me", text="Bot started")
         #web-server
         app = web.AppRunner(await web_server())
         await app.setup()
