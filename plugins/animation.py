@@ -139,31 +139,3 @@ async def heart_fn(c, msg):
         await msg.edit(heart1)
     else:
         await msg.edit(heart)
-
-earth_stages = [
-    "🌍",
-    "🌎",
-    "🌏",
-    "🌎"
-]
-
-async def rotate_earth(message):
-    for stage in earth_stages:
-        await message.edit(stage)
-        await asyncio.sleep(1.0)
-
-sun_stages = [
-    "☀️",
-    "🌤️",
-    "⛅",
-    "🌥️",
-    "☁️",
-    "🌥️",
-    "⛅",
-    "🌤️"
-]
-
-async def rotate_sun(message):
-    for stage in sun_stages:
-        await message.edit(stage)
-        await asyncio.sleep(1.0)                
