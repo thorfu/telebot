@@ -95,9 +95,11 @@ async def scan_fn(message):
     await message.edit_text("System scan complete!\nCompiling report...")
     await asyncio.sleep(2)
     await message.edit_text(
-        "Scan Report:\n\n ✅ No issues found.\nSystem Status:\n`Healthy`"
+        "Scan Report:\n\n✅ No issues found.\nSystem Status: `Healthy`"
     )
-        
+    await asyncio.sleep(5)
+    await message.delete()
+
 
 async def ily(message):
     emojis = ["❤️", "🌹", "💫", "🎉", "💖"]
