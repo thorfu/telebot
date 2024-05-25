@@ -196,5 +196,5 @@ async def ily_cmd(client: Client, message: Message):
 
 @Client.on_message(filters.command("heart", prefixes=".") & filters.me)
 async def heart_cmd(client: Client, message: Message):
-    number = int(message.command[1]) if len(message.command) > 1 else 0
+    number = int(message.command[1]) if len(message.command) > 1 else 1
     await heart_fn(number, message)

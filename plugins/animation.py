@@ -147,8 +147,8 @@ heart2 = """
 
 async def heart_fn(c, msg):
     if c == 1:
-        await msg.edit(heart1)
+        await msg.edit(heart)
     elif c == 2:
-        await msg.edit(heart2)
+        await msg.edit(heart1)
     else:
-        await msg.edit(heart)    
+        await msg.edit(heart2)    
