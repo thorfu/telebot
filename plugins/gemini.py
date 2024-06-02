@@ -41,7 +41,7 @@ def gemini(text):
         return f"Error generating text: {str(e)}"
 
 
-@Client.on_message(filters.command(["ask", "a"], prefixes="/") & filters.me)
+@Client.on_message(filters.command(["ask", "a"], prefixes=",") & filters.me)
 async def ask(_, message):
     try:
         text = message.text.split(None, 1)[1]
