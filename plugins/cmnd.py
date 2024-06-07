@@ -198,3 +198,10 @@ async def ily_cmd(client: Client, message: Message):
 async def heart_cmd(client: Client, message: Message):
     number = int(message.command[1]) if len(message.command) > 1 else 1
     await heart_fn(number, message)
+    
+@Client.on_message(filters.command("restart", prefixes=".") & filters.me)
+async def stop_button(bot, message):
+    msg = await message.edit(text="**Process stoped, bot is restarting...**", chat_id=message.chat.id)       
+    await asyncio.sleep(3)
+    await msg.edit("**Bot restarted**")
+    os.execl(sys.executable, sys.executable, *sys.argv)
